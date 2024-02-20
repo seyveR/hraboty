@@ -1,0 +1,287 @@
+
+/*  Стили для base+home шаблона
+
+Блок header */
+
+
+.container {
+    margin: 32px 60px;
+    font-family: 'Open Sans', sans-serif;
+}
+
+body {
+    margin: 0px;
+}
+
+
+.header:after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 1px; 
+    background-color: #fff; 
+    margin-top: 32px; 
+
+    opacity: 0.15;
+    border-color: transparent;
+    border-style: solid;
+    box-shadow: 0px 4px 4px 0px rgba(0,0,0,0.3);
+}
+
+.header-line {
+    padding-top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    letter-spacing: .3px;
+}
+
+
+.header-logo {
+    flex-shrink: 0;
+}
+
+.header-logo img{
+    flex-shrink: 0;
+    width: 400px;
+    height: 70px;
+}
+
+.nav-item {
+    color: #000;
+    text-decoration: none;
+    font-weight: 300;
+    font-size: 22px;
+
+    margin-right: 60px;
+    transition: color 0.3s linear;
+}
+
+.nav-item:hover{
+    color: #5abd74;
+}
+
+.nav {
+    padding-right: 0px;
+    height: 100%;
+    align-items: center;
+}
+
+
+.button-log {
+    width: 70px; 
+    height: 70px; 
+    position: relative;
+}
+
+.tooltip {
+    visibility: hidden; /* Плашечка изначально скрыта */
+    background-color: white; /* Белый фон */
+    color: black; /* Черный текст */
+    text-align: center;
+    border-radius: 5px; /* Закругленные углы */
+    padding: 20px; /* Больше отступов для текста */
+    position: absolute;
+    z-index: 1; /* Чтобы плашечка была выше изображения */
+    top: 60%; /* Центрирование по вертикали */
+    left: calc(98%); /* Расстояние от правого края изображения */
+    transform: translateY(20%); /* Центрирование по вертикали */
+}
+
+.tooltip a {
+    text-decoration: none; /* Убираем подчеркивание */
+    color: black; /* Черный цвет текста */
+}
+
+.btn:hover .tooltip {
+    visibility: visible; /* Показываем плашечку при наведении */
+}
+
+
+/* блок с почтой */
+
+
+.main-container {
+    margin: 100px 180px;
+    font-family: 'Open Sans', sans-serif;
+}
+
+
+
+.header-content {
+    padding-top: 0;
+    margin-top: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    letter-spacing: .5px;
+}
+
+.header-title {
+    color: #000;
+    font-weight: 100;
+    font-size: 60px;
+}
+
+.header-subtitle {
+    color: #000;
+    font-size: 24px;
+    margin-top: 20px;
+}
+
+.email-main {
+    color: #000;
+    font-size: 24px;
+    margin-top: 50px;
+}
+
+.header-image img {
+    margin-top: 50px;
+    margin-right: -60px;
+    width: 600px;
+    height: 550px;
+}
+
+.offer-form {
+    margin-top: -30px;
+    color: #000;
+    position: relative;
+}
+
+.offer-form form {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-container {
+    margin-bottom: 10px; 
+}
+
+.offer-form input[type="email"] {
+    width: 600px;
+    height: 30px;
+    font-size: 20px;
+    padding: 15px;
+    border: 1px solid #000;
+    border-radius: 8px;
+}
+
+.offer-form input[type="email"]::placeholder {
+    color: #aaa;
+}
+
+.offer-form button {
+    margin-top: 10px;
+    flex: none;
+    background-color: #5abd74;
+    color: #fff;
+    text-decoration: none;
+    width: 200px;
+    padding: 18px 30px;
+    font-size: 20px;
+    font-weight: 500;
+    border-radius: 7px;
+    border: 2px solid transparent;
+}
+
+.offer-form button:hover {
+    background-color: #fff;
+    color: #5abd74;
+    border-color: #5abd74;
+}
+
+.empty {
+    color: #D4DBDE;
+    font-size: 8px;
+}
+
+
+/* Блок с агрегаторами */
+
+.info-block {
+    background-color: #f3fcf9;
+}
+
+.image-container {
+    padding: 30px 0px;
+    display: flex;
+    justify-content: space-between;
+    margin: 0px 90px;
+}
+
+.hhru {
+    width: 270px; 
+    height: 145px; 
+}
+
+.rabotaru {
+    margin-top: 10px;
+    width: 480px; 
+    height: 85px; 
+}
+
+.rabotavrus {
+    margin-top: -5px;
+    width: 300px; 
+    height: 160px; 
+}
+
+
+/* Низ страницы */
+
+.page-down-block {
+    margin-top: 250px;
+    background-color: #f3fcf9;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.column-container {
+    padding: 50px 0px;
+    display: flex;
+    justify-content: space-around;
+    margin: -20px 90px;
+    letter-spacing: .5px;
+}
+
+.info-title {
+    font-size: 28px;
+    font-weight: 500;
+}
+
+.logo-info-img {
+    flex-shrink: 0;
+    width: 270px;
+    height: 50px;
+}
+
+.col-text {
+    margin-top: 15px;
+    font-size: 17px;
+}
+
+.col-text_number {
+    margin-top: 15px;
+    font-size: 17px;
+    letter-spacing: 1px;
+}
+
+.col-text_number:hover {
+    color: #5abd74;
+}
+
+.empty-place {
+    height: 60px;
+}
+
+
+
+
+
+
+
+
+
+
+

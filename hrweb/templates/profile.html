@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+
+
+    <title>Хочу Работу</title>
+</head>
+
+<body>
+    {% block header_down %}
+    <div class="header-down">
+        <div class="profile-container">
+            <div class="profile-content">
+                <div class="profile-title">
+                    <div class="profile-lk">
+                        Личный кабинет
+                    </div>
+                    <hr>
+                    
+
+                    <div class="profile-main-info">
+                        <div class="profile-photo">
+                            <img class="profile-image" src="{% static 'hrweb/files/profilelogo.png' %}">
+                        </div>
+
+                        <div class="profile-name">
+                            <div class="profile-initials">
+                                Федотов Иван
+                            </div>
+                            <div class="profile-nickname">
+                                Фуллстек
+                            </div>
+                            <div class="profile-location">
+                                mail@example.ru
+                            </div>
+                        </div>
+                        
+                        <div class="profile-photo-btn-update">
+                            Обновить
+                        </div>
+                        <div class="profile-photo-btn-delete">
+                            Удалить
+                        </div>
+                    
+                        
+                    </div>
+                    <hr>
+                </div>
+
+                <div class="profile-user-info">
+                    <div class="user-info-form">
+                        <form method="post" id="infoForm">
+                            {% csrf_token %}
+                            <div class="input-container">
+                                <div class="profile-user-info-name">
+                                    <p>Имя</p>
+                                </div>
+                                <input type="text" id="firstname" name="firstname"  placeholder="Например, Иван" required>
+                                <div class="profile-user-info-name">
+                                    <p>Фамилия</p>
+                                </div>
+                                <input type="text" id="secondname" name="secondname"  placeholder="Например, Федотов" required>
+                                <div class="profile-user-info-name">
+                                    <p>Имя пользователя</p>
+                                </div>
+                                <input type="text" id="nickname" name="nickname"  placeholder="Например, фуллстек" required>
+                                <div class="profile-user-info-name">
+                                    <p>Электронная почта</p>
+                                </div>
+                                <input type="profile-email" id="email" name="email" pattern="[a-zA-Z0-9._%+-]+@(mail\.ru|yandex\.ru|gmail\.com)" placeholder="mail@example.ru" required>
+                                <div class="profile-user-info-name">
+                                    <p>Телефон</p>
+                                </div>
+                                <input type="number" id="phone" name="phone" placeholder="+7" required>
+                            </div>
+                            <button type="submit">Сохранить</button>
+                        </form>
+                    </div>
+
+                    <div class="user-passwd-form">
+                        <form method="post" id="passwdForm">
+                            {% csrf_token %}
+                            <div class="input-container">
+                                <div class="profile-user-info-name">
+                                    <p>Текущий пароль</p>
+                                </div>
+                                <input type="text" id="firstname" name="firstname" required>
+                                <div class="profile-user-info-name">
+                                    <p>Новый пароль</p>
+                                </div>
+                                <input type="text" id="secondname" name="secondname" required>
+                                <div class="profile-user-info-name">
+                                    <p>Подтвердите новый пароль</p>
+                                </div>
+                                <input type="text" id="nickname" name="nickname" required>
+                            </div>
+                            <button type="submit">Обновить</button>
+                        </form>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    {% endblock %}
+</body>

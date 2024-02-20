@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% load static %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>Хочу Работу</title>
+</head>
+
+<body>
+    {% block header_down %}
+    <div class="header-down">
+        <div class="main-container">
+            <div class="header-content">
+                <div class="header-title">
+                    Все вакансии<br>
+                    В одном месте
+
+                    <div class="header-subtitle">
+                        Будьте в курсе всех скидок и<br>
+                        промоакций. получите пробную версию<br>
+                        нашего продукта.
+                    </div>
+
+                    <div class="email-main" id="email-main">
+                        <p>Ваша электронная почта</p>
+                    </div>
+
+                    <div class="offer-form">
+                        <form method="post" id="contactForm">
+                            {% csrf_token %}
+                            <div class="input-container">
+                                <input type="email" id="email" name="email" pattern="[a-zA-Z0-9._%+-]+@(mail\.ru|yandex\.ru|gmail\.com)" placeholder="mail@example.ru" required>
+                            </div>
+                            <button type="submit">Отправить</button>
+                        </form>
+                    </div>
+
+                </div>
+
+                <div class="header-image">
+                    <img src="{% static 'hrweb/files/startpageimg.png' %}">
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endblock %}
+
+    {% block info %}
+    <div class="info-block">
+        <div class="image-container">
+            <div class="hhru">
+                <img src="{% static 'hrweb/files/hhru.png' %}" class="hhru">
+            </div>
+            <div class="rabotaru">
+                <img src="{% static 'hrweb/files/rabotaru.png' %}" class="rabotaru">
+            </div>
+            <div class="rabotavrus">
+                <img src="{% static 'hrweb/files/rabotavrus.png' %}" class="rabotavrus">
+            </div> 
+        </div>
+    </div>
+    {% endblock %}
+
+</body>
+</html>

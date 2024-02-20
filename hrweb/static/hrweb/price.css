@@ -1,0 +1,253 @@
+/* СТРАНИЦА С ТАРИФАМИ */
+
+
+.price-container {
+    text-align: center;
+    margin-top: 100px;
+    padding: 0px 100px;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.price-title {
+    font-size: 55px;
+    font-weight: 500;
+    letter-spacing: 1px;
+}
+
+.price-text {
+    margin-top: 30px;
+    font-size: 40px;
+}
+
+
+/* Стили для слайдера */
+
+.slider-tarif {
+    margin-top: 40px;
+    position: relative;
+  }
+
+.slider {
+    width: 100%;
+    margin-top: 20px;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 10px;
+    background: linear-gradient(to right, #d3d3d3 0%, #d3d3d3 100%, #5abd74 100%, #5abd74 100%);
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+    border-radius: 5px;
+    position: relative;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background: #5abd74;
+    cursor: pointer;
+    border-radius: 50%;
+    z-index: 1;
+}
+
+.slider::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    background: #5abd74;
+    cursor: pointer;
+    border-radius: 50%;
+    z-index: 1;
+}
+
+.slider-value-container {
+    font-family: 'Open Sans', sans-serif;
+    position: absolute;
+    top: -35px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #000;
+    border-radius: 10%;
+    padding: 7px 0px;
+    width: 90px;
+    color: #fff;
+}
+
+.slider-value {
+    font-size: 20px;
+}
+
+.slider-ticks {
+    position: relative;
+    bottom: 5px; /* Регулируйте это значение в зависимости от вашего дизайна */
+}
+
+.slider-tick {
+    position: absolute;
+    bottom: 0; /* Измените это значение, если нужно поднять или опустить черточки */
+    width: 2px; /* Измените ширину черточки при необходимости */
+    height: 10px; /* Измените высоту черточки при необходимости */
+    background-color: #000; /* Измените цвет черточки при необходимости */
+}
+
+.slider-tick-text {
+    position: absolute;
+    font-size: 24px;
+    bottom: -36px; /* Регулируйте это значение в зависимости от вашего дизайна */
+    transform: translateX(-50%);
+    white-space: nowrap; /* Чтобы текст не переносился на новую строку */
+}
+
+
+
+.price-types-container {
+    margin-top: 150px;
+    padding: 0px 130px;
+    letter-spacing: .3px;
+}
+
+.price-types-holder {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    position: relative;
+    z-index: 1;
+    max-width: 100%;
+    margin-left: 40px;
+}
+
+.price-type {
+    border-radius: 20px;
+    box-shadow: 0px 0px 0px 1px #000;
+    background-color: #fff;
+    width: 380px;
+    height: 650px;
+    margin-bottom: 30px;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.price-type.selected {
+    transform: scale(1.05);
+    box-shadow: 0px 0px 10px 1px #000;
+    z-index: 2;
+}
+
+.price-type-image {
+    display: flex;
+    justify-content: left;
+    padding: 0px 0px;
+}
+
+.price-type-img {
+    width: 170px;
+    height: 170px;
+}
+
+.price-type-title {
+    text-align: center;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 46px;
+    font-weight: 500;
+    padding-left: 20px;
+    margin-top: 10px;
+}
+
+.price-type-desc {
+    text-align: center;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 24px;
+    font-weight: 300;
+    padding: 0px 20px;
+    margin-top: 15px;
+}
+
+
+.list-li {
+    padding-left: 30px;
+    letter-spacing: 0.5px;
+    font-size: 16px;
+}
+
+.custom-list,
+.custom-list_try {
+    list-style: none;
+    padding: 0;
+}
+
+.custom-list li,
+.custom-list_try li {
+    position: relative;
+    margin-bottom: 30px;
+}
+
+.custom-list_try li:before {
+    content: '';
+    position: absolute;
+    left: -20px; /* Расстояние от галочки до текста */
+    top: 50%; /* Выравнивание галочки по центру */
+    transform: translateY(-50%);
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background-size: contain; /* Подгон размера галочки */
+}
+
+.custom-list_try li:first-child:before {
+    background: url('files/check.svg') no-repeat center center;
+}
+
+.custom-list_try li:not(:first-child):before {
+    background: url('files/cross.svg') no-repeat center center;
+}
+
+.custom-list li:before {
+    content: '';
+    position: absolute;
+    left: -20px; /* Расстояние от галочки до текста */
+    top: 50%; /* Выравнивание галочки по центру */
+    transform: translateY(-50%);
+    background: url('files/check.svg') no-repeat center center;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background-size: contain; /* Подгон размера галочки */
+}
+
+.custom-list li:after,
+.custom-list_try li:after {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 0; /* Расстояние от линии до текста */
+    top: 100%; /* Помещаем линию под каждый элемент li */
+    width: 100%;
+    height: 2px;
+    background-color: #ccc; /* Цвет линии */
+}
+
+
+.btn-price-block {
+    display: flex;
+    justify-content: center;
+    margin-top: 120px;
+}
+
+.btn-price {
+    background-color: #5abd74;
+    color: #fff;
+    text-decoration: none;
+    padding: 18px 40px;
+    font-size: 20px;
+    font-weight: 500;
+    border-radius: 7px;
+    font-family: 'Open Sans', sans-serif;
+    border: 2px solid transparent;
+}
+
+.btn-price:hover{
+    background-color: #fff;
+    color: #5abd74;
+    border-color: #5abd74;
+}

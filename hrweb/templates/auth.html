@@ -1,0 +1,80 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="{% static 'hrweb/auth.css' %}">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,800;1,500;0,200;1,300&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,800;1,500&family=Tinos:wght@400;700&display=swap" rel="stylesheet">
+
+    <link rel="icon" href="{% static 'images/prostor_icon.ico' %}" type="image/x-icon">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
+
+    
+    <title>Хочу Работу</title>
+</head>
+
+<body>
+    <img src="{% static 'hrweb/files/papor.png' %}" class="top-image" alt="papor">
+    <img src="{% static 'hrweb/files/papor2.png' %}" class="bottom-left-image" alt="papor">
+    <div class="authreg-container">
+        <div class="authreg-content">
+            <div class="welcome">
+                Добро пожаловать
+            </div>
+            <div class="authreg-user-info">
+                
+                <div class="authreg-form">
+                    <form method="post" id="authregForm">
+                        {% csrf_token %}
+                        <div class="input-container">
+                            <div class="authreg-hello">
+                                <p>Мы рады видеть вас снова</p>
+                            </div>
+                            <input type="email" id="email" name="email" pattern="[a-zA-Z0-9._%+-]+@(mail\.ru|yandex\.ru|gmail\.com)" placeholder="Почта" required>
+                            <div class="password-container">
+                                <div class="password-input">
+                                    <input type="password" id="password" name="password" placeholder="Пароль" required>
+                                    <img src="{% static 'hrweb/files/hidden.png' %}" class="toggle-password" onclick="togglePasswordVisibility()" alt="Показать пароль">
+                                </div>
+                            </div>
+
+                            <script>
+                                function togglePasswordVisibility() {
+                                  var passwordInput = document.getElementById("password");
+                                  var toggleIcon = document.querySelector(".toggle-password");
+
+                                  if (passwordInput.type === "password") {
+                                    passwordInput.type = "text";
+                                    toggleIcon.src = "{% static 'hrweb/files/eye.png' %}";
+                                    toggleIcon.alt = "Скрыть пароль";
+                                  } else {
+                                    passwordInput.type = "password";
+                                    toggleIcon.src = "{% static 'hrweb/files/hidden.png' %}";
+                                    toggleIcon.alt = "Показать пароль";
+                                  }
+                                }
+                            </script>
+                        </div>
+                        <button type="submit">Войти</button>
+                    </form>
+                </div>
+                
+            </div>
+            <div class="authreg-redirect">
+                <p>Еще нет аккаунта? <a href="/reg">Зарегистрируйтесь</a></p>
+            </div>
+        </div>
+    </div>
+</body>

@@ -1,0 +1,124 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="{% static 'hrweb/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'hrweb/profile.css' %}">
+    <link rel="stylesheet" href="{% static 'hrweb/price.css' %}">
+    <link rel="stylesheet" href="{% static 'hrweb/aboutus.css' %}">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,800;1,500;0,200;1,300&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,800;1,500&family=Tinos:wght@400;700&display=swap" rel="stylesheet">
+
+    <link rel="icon" href="{% static 'images/prostor_icon.ico' %}" type="image/x-icon">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
+
+    
+    <title>Хочу Работу</title>
+</head>
+
+<body>
+    <div class="header">
+        <div class="container">
+            <div class="header-line">
+                <div class="header-logo">
+                    <a href="/"><img src="{% static 'hrweb/files/logojob.png' %}" alt=""></a>
+                </div>
+    
+    
+                <div class="nav">
+                    <a class="nav-item" href="/about_us">О нас</a>
+                    <a class="nav-item" href="/try">Поиск</a>
+                    <a class="nav-item" href="/price">Цены</a>
+                </div>
+    
+                <div class="btn">
+                    <a href="/profile">
+                        <img class="button-log" src="{% static 'hrweb/files/profilelogo.png' %}">
+                        <div class="tooltip">
+                            <a href="/auth">Войти</a>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% block header_down %}
+    {% endblock %}
+
+    {% block info %}
+    {% endblock %}
+
+
+
+    <div class="page-down-block">
+        <div class="column-container">
+            <div class="first-col">
+                <img src="{% static 'hrweb/files/logojob.png' %}" class="logo-info-img">
+                <div class="col-text part_1">
+                    Все вакансии
+                </div>
+                <div class="col-text part_2">
+                    В одном месте
+                </div>
+            </div>
+            <div class="second-col">
+                <div class="info-title">
+                    Ссылки
+                </div>
+                <div class="col-text">
+                    Вконтакте
+                </div>
+                <div class="col-text">
+                    Телеграм
+                </div>
+            </div>
+            <div class="third-col">
+                <div class="info-title">
+                    Поддержка
+                </div>
+                <div class="col-text">
+                    Задать вопрос
+                </div>
+                <div class="col-text">
+                    Пользовательское<br>
+                    соглашение
+                </div>
+            </div>
+            <div class="fourth-col">
+                <div class="info-title">
+                    Контакты
+                </div>
+                <div class="col-text_number">
+                    +7(911)568-35-72
+                </div>
+            </div>
+        </div>
+        <div class="empty-place">
+
+        </div>
+    </div>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,166 @@
+{% extends "base.html" %}
+{% load static %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+</head>
+
+<body>
+    {% block header_down %}
+    <div class="about-us">
+        <div class="types">
+            <div class="types-container">
+                <div class="types-holder">
+        
+                    <div class="type" id="types">
+
+                        <div class="type-image">
+                            <img class="type-img" src="{% static 'hrweb/files/iconsettings.png'%}">
+                        </div>
+
+                        <div class="type-title">
+                            Точность поиска по<br>
+                            заданым фильтрам
+                        </div>
+        
+                        <div class="type-desc">
+                            Настройте параметры фильтра на<br> 
+                            сайте для получения нужной<br> 
+                            выборки объявлений или укажите<br> 
+                            желаемую категорию
+                        </div>
+                    </div>
+        
+                    <div class="type" id="types">
+
+                        <div class="type-image">
+                            <img class="type-img" src="{% static 'hrweb/files/iconperson.png'%}">
+                        </div>
+
+                        <div class="type-title">
+                            Удобный интерфейс
+                        </div>
+        
+                        <div class="type-desc">
+                            Собирайте информацию о<br> 
+                            вакансиях с помощью ХочуРаботу<br> 
+                            тратя на это минимум своего<br> 
+                            времени
+                        </div>
+                    </div>
+                    
+                    <div class="type" id="types">
+
+                        <div class="type-image">
+                            <img class="type-img" src="{% static 'hrweb/files/iconcloud.png'%}">
+                        </div>
+    
+                        <div class="type-title">
+                            Синхронизация данных<br>
+                            с разных источников
+                        </div>
+        
+                        <div class="type-desc">
+                            Автоматический синхронизация<br> 
+                            собранных данных в базу данных 
+                        </div>
+                    </div>
+        
+                    <div class="type" id="types">
+    
+                        <div class="type-image">
+                            <img class="type-img" src="{% static 'hrweb/files/icontime.png'%}">
+                        </div>
+    
+                        <div class="type-title">
+                            Быстрый поиск
+                        </div>
+        
+                        <div class="type-desc">
+                            Максимальная скорость<br> 
+                            обработки данных
+                        </div>
+                    </div>   
+                </div>
+
+                <div class="types-text">
+                    <div class="types-title">
+                        Комплексное решение<br> 
+                        для вас
+                    </div>
+                    <div class="sub-text">
+                        <div class="types-subtitle">
+                            Хотите собирать данные соискателей или<br> 
+                            работодателей?
+                        </div>
+                        <div class="types-subtitle">
+                            Узнавать о появлении новых вакансий?<br>
+                            Подобрать нужных сотрудников или<br> 
+                            найти хорошую работу?
+                        </div>
+                        <div class="types-subtitle">
+                            Собирайте информацию о вакансиях<br> 
+                            с помощью ХочуРаботу тратя на это<br> 
+                            минимум своего времени
+                        </div>
+
+                        <div class="btn-more">
+                            Подробнее
+                        </div>
+                    </div> 
+                </div>        
+            </div>
+        </div>
+    </div>      
+    {% endblock %}
+
+
+
+    {% block info %}
+    <div class="pics-about-us">
+        <div class="pics-container">
+            <div class="pics-content">
+                <div class="pics-title">
+                    Экспорт данных в<br>
+                    удобные форматы
+                </div>
+
+                <div class="pics-image_1">
+                    <img src="{% static 'hrweb/files/pics1.png' %}">
+                </div>
+            </div>
+            <div class="pics-content">
+
+                <div class="pics-image_2">
+                    <img src="{% static 'hrweb/files/pics2.png' %}">
+                </div>
+
+                <div class="pics-title_2">
+                    Должен ли я быть<br>
+                    экспертом в<br>
+                    программировании
+
+                    <div class="pics-text">
+                        Если вы никогда не сталкивались с<br>
+                        программированием, вы можете использовать наш<br>
+                        парсер. Он имеет графическую оболочку и позволяет<br>
+                        работать с сервисом людям, не имеющих<br> 
+                        теоретических познаний в программировании.<br> 
+                        Вам нужно лишь выделить данные, которые<br> 
+                        нужно забратьи разместить их в структуре данных, 
+                        которую создаст для вас парсер. Для более<br> 
+                        простого освоения этого инструмента, мы<br> 
+                        создали серию видео уроков, с которыми<br> 
+                        вы можете ознакомиться в документации.
+                    </div> 
+                </div>
+
+                 
+            </div>
+        </div>
+    </div>
+    {% endblock %}
+</body>
+</html>

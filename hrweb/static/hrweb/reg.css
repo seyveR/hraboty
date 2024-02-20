@@ -1,0 +1,123 @@
+body {
+    display: flex;
+    justify-content: center; /* Выравнивание контента по центру по горизонтали */
+    align-items: center; /* Выравнивание контента по центру по вертикали */
+    height: 100vh; /* Высота равна высоте окна браузера */
+    margin: 0; /* Убираем внешние отступы */
+}
+
+.top-image {
+    position: fixed;
+    top: 0;
+    right: 100px;
+    z-index: 9999; /* Число, задающее порядок слоя элемента */
+}
+
+.bottom-left-image {
+    position: fixed;
+    bottom: 50px;
+    left: 0;
+    z-index: 9999; /* Число, задающее порядок слоя элемента */
+}
+
+.authreg-user-info {
+    margin-top: 50px;
+}
+
+.authreg-container {
+    margin-bottom: 10px; 
+    width: 80%; /* Пример: увеличиваем ширину контейнера до 80% от ширины родительского элемента */
+    max-width: 800px; /* Пример: устанавливаем максимальную ширину контейнера */
+    margin: 0 auto; /* Центрируем контейнер по горизонтали */
+}
+
+.authreg-form input {
+    width: 80%; /* Ширина поля для ввода будет на 30px меньше ширины родительского контейнера */
+    max-width: 900px; /* Максимальная ширина поля для ввода */
+    height: 30px;
+    font-size: 20px;
+    padding: 15px;
+    margin-bottom: 10px; /* Отступ между полями для ввода */
+    border: 1px solid #000;
+    border-radius: 8px;
+}
+
+.authreg-form input::placeholder {
+    color: #aaa;
+}
+
+.authreg-form {
+    margin-top: -30px;
+    color: #000;
+    position: relative;
+    text-align: center; /* Центрируем дочерние элементы */
+}
+
+
+.authreg-form button {
+    width: 50%; /* Ширина кнопки будет 50% ширины родительского контейнера (поля для ввода) */
+    max-width: 350px; /* Максимальная ширина кнопки */
+    margin: 0 auto; /* Для выравнивания кнопки по центру */
+    background-color: #5abd74;
+    color: #fff;
+    text-decoration: none;
+    padding: 18px 30px;
+    font-size: 25px;
+    font-weight: 500;
+    border-radius: 15px;
+    border: 2px solid transparent;
+}
+
+.authreg-form button:hover {
+    background-color: #fff;
+    color: #5abd74;
+    border-color: #5abd74;
+}
+
+
+.welcome {
+    font-size: 40px;
+    color: #000;
+    font-weight: bold;
+    font-family: 'Open Sans', sans-serif;
+    text-align: center;
+}
+
+.authreg-redirect {
+    font-size: 16px;
+    color: #000;
+    font-family: 'Open Sans', sans-serif;
+    text-align: center;
+}
+
+.authreg-redirect a{
+    text-decoration: none; 
+    color: black; 
+    font-weight: bold;
+}
+
+.authreg-redirect:hover a{
+    color:#aaa; 
+}
+
+.password-container {
+    position: relative;
+}
+
+
+.password-input input {
+    width: 80%;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 80px;
+    top: 45%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.password-input img {
+    width: 25px;
+    height: 25px;
+}

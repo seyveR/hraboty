@@ -1,0 +1,225 @@
+{% extends "base.html" %}
+{% load static %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>Хочу Работу</title>
+</head>
+
+<body>
+    {% block header_down %}
+    <div class="price-slider">
+        <div class="price-container">
+            <div class="price-title">
+                Стоимость услуг
+            </div>
+            <div class="price-text">
+                Выберите тарифный план:
+            </div>
+            <div class="slider-tarif">
+                <input type="range" min="0" max="7020" value="0" class="slider" id="mySlider">
+                <div class="slider-value-container">
+                    <div class="slider-value">0 ₽</div>
+                </div>
+                <div class="slider-ticks">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+         
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var slider = document.getElementById("mySlider");
+            var sliderValue = document.querySelector(".slider-value");
+            var sliderValueContainer = document.querySelector(".slider-value-container");
+            var sliderTicksContainer = document.querySelector(".slider-ticks");
+
+            var percent = (slider.value - slider.min) / (slider.max - slider.min);
+            var position = percent * (slider.offsetWidth - 20);
+            var left = position + 10; 
+            sliderValueContainer.style.left = left + 'px';
+
+            var tickValues = [0, 900, 3600, 7020];
+            var textValues = ["Нет подписки", "30 дней", "6 месяцев", "12 месяцев"];
+
+            for (var i = 0; i < tickValues.length; i++) {
+                var tick = document.createElement("div");
+                tick.className = "slider-tick";
+                var tickPercent = (tickValues[i] - slider.min) / (slider.max - slider.min);
+                var tickPosition = tickPercent * (slider.offsetWidth - 20) + 10;
+                tick.style.left = tickPosition + 'px';
+                sliderTicksContainer.appendChild(tick);
+
+                var tickText = document.createElement("div");
+                tickText.className = "slider-tick-text";
+                tickText.innerHTML = textValues[i];
+                sliderTicksContainer.appendChild(tickText);
+                tickText.style.left = tickPosition + 'px';
+            }
+
+            slider.addEventListener("input", function () {
+                // Обновление стилей и текста сразу при ведении слайдера
+                var percent = (slider.value - slider.min) / (slider.max - slider.min);
+                var position = percent * (slider.offsetWidth - 20); // 20 is the thumb width
+                var left = position + 10; // 10 is half of the thumb width
+                slider.style.background = 'linear-gradient(to right, #5abd74 0%, #5abd74 ' + percent * 100 + '%, #d3d3d3 ' + percent * 100 + '%, #d3d3d3 100%)';
+                sliderValue.innerHTML = slider.value + " ₽"; // Добавлен символ ₽ после числа
+                sliderValueContainer.style.left = left + 'px';
+            });
+
+            // Добавляем обработчик события mouseup
+            slider.addEventListener("mouseup", function () {
+                var nearestValue = findNearestTickValue(slider.value);
+                slider.value = nearestValue;
+
+                // Обновление стилей и текста
+                var percent = (nearestValue - slider.min) / (slider.max - slider.min);
+                var position = percent * (slider.offsetWidth - 20); // 20 is the thumb width
+                var left = position + 10; // 10 is half of the thumb width
+                slider.style.background = 'linear-gradient(to right, #5abd74 0%, #5abd74 ' + percent * 100 + '%, #d3d3d3 ' + percent * 100 + '%, #d3d3d3 100%)';
+                sliderValue.innerHTML = nearestValue + " ₽"; // Добавлен символ ₽ после числа
+                sliderValueContainer.style.left = left + 'px';
+            });
+
+            // Функция для нахождения ближайшей отметки
+            function findNearestTickValue(value) {
+                var nearestValue = tickValues.reduce(function (prev, curr) {
+                    return (Math.abs(curr - value) < Math.abs(prev - value) ? curr : prev);
+                });
+
+                return nearestValue;
+            }
+        });
+    </script>
+    
+    {% endblock %}
+
+    {% block info %}
+    <div class="price-types">
+        <div class="price-types-container">
+            <div class="price-types-holder">
+    
+                <div class="price-type" id="price-types">
+
+                    <div class="price-type-title">
+                        7 ДНЕЙ
+                    </div>
+    
+                    <div class="price-type-desc">
+                        ПРОБНАЯ ВЕРСИЯ
+                    </div>
+
+                    <div class="price-type-title">
+                        0 ₽
+                    </div>
+
+
+                    <div class="list-li">
+                        <ul class="custom-list_try">
+                            <li>Обучающее видео. FAQ. Справка по программе</li>
+                            <li>Количество собранных данных не ограничено</li>
+                            <li>Техническая поддержка по email</li>
+                            <li>Платные консультации и обучение</li>
+                            <li>Бонусы от наших партнёров</li>
+                        </ul>
+                    </div>
+                    <div class="btn-price-block">
+                        <div class="btn-price">
+                            Попробовать
+                        </div>
+                    </div>
+
+                </div>
+    
+                <div class="price-type" id="price-types">
+
+                    <div class="price-type-title">
+                        30 ДНЕЙ
+                    </div>
+    
+                    <div class="price-type-desc">
+                        ПОЛНАЯ ВЕРСИЯ
+                    </div>
+
+                    <div class="price-type-title">
+                        900 ₽
+                    </div>
+
+                    <div class="list-li">
+                        <ul class="custom-list">
+                            <li>Обучающее видео. FAQ. Справка по программе</li>
+                            <li>Количество собранных данных не ограничено</li>
+                            <li>Техническая поддержка по email</li>
+                            <li>Платные консультации и обучение</li>
+                            <li>Бонусы от наших партнёров</li>
+                        </ul>
+                    </div>
+                    <div class="btn-price-block">
+                        <div class="btn-price">
+                            Приобрести
+                        </div>
+                    </div>
+
+                </div>
+                
+                <div class="price-type" id="price-types">
+
+                    <div class="price-type-title">
+                        365 ДНЕЙ
+                    </div>
+    
+                    <div class="price-type-desc">
+                        ВЫГОДНОЕ ПРЕДЛОЖЕНИЕ
+                    </div>
+
+                    <div class="price-type-title">
+                        7020 ₽
+                    </div>
+
+                    <div class="list-li">
+                        <ul class="custom-list">
+                            <li>Обучающее видео. FAQ. Справка по программе</li>
+                            <li>Количество собранных данных не ограничено</li>
+                            <li>Техническая поддержка по email</li>
+                            <li>Платные консультации и обучение</li>
+                            <li>Бонусы от наших партнёров</li>
+                        </ul>
+                    </div>
+
+                    <div class="btn-price-block">
+                        <div class="btn-price">
+                            Приобрести
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>     
+        </div>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const priceTypes = document.querySelectorAll('.price-type');
+                        
+                priceTypes.forEach(function (priceType) {
+                    priceType.addEventListener('click', function () {
+                        // Удаление класса 'selected' у всех элементов
+                        priceTypes.forEach(function (pt) {
+                            pt.classList.remove('selected');
+                        });
+                    
+                        // Добавление класса 'selected' к выбранному элементу
+                        priceType.classList.add('selected');
+                    });
+                });
+            });
+        </script>
+
+    </div>
+    {% endblock %}
+
+</body>
+</html>

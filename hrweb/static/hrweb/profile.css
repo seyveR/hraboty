@@ -1,0 +1,205 @@
+/* Профиль блок*/
+
+
+.profile-container {
+    margin: 60px 180px;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.profile-content {
+    /* display: flex; */
+    align-items: center;
+    justify-content: space-around;
+    position: relative;
+    letter-spacing: .1px;
+    width: 100%;
+}
+
+.profile-lk {
+    color: #000;
+    font-weight: bold;
+    font-size: 35px;
+}
+
+.profile-image {
+    width: 150px;
+    height: 150px;
+}
+
+.profile-main-info {
+    margin-top: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    letter-spacing: .1px;
+}
+
+.profile-name {
+    margin-right: 650px;
+    margin-bottom: 20px;
+}
+
+.profile-initials {
+    font-size: 30px;
+    font-weight: 800
+}
+
+.profile-nickname {
+    font-size: 26px;
+    padding-top: 6px;
+    font-weight: 100
+}
+
+.profile-location {
+    color: #aaa;
+    font-size: 20px;
+    padding-top: 6px;
+    font-weight: 100
+}
+
+.profile-photo-btn-update {
+    background-color: #5abd74;
+    color: #fff;
+    text-decoration: none;
+    padding: 18px 40px;
+    font-size: 20px;
+    font-weight: 500;
+    border-radius: 7px;
+    font-family: 'Open Sans', sans-serif;
+    border: 2px solid transparent;
+}
+
+.profile-photo-btn-update:hover{
+    background-color: #fff;
+    color: #5abd74;
+    border-color: #5abd74;
+}
+
+.profile-photo-btn-delete {
+    background-color: #fff;
+    color: #000;
+    text-decoration: none;
+    padding: 18px 40px;
+    font-size: 20px;
+    font-weight: 500;
+    border-radius: 7px;
+    font-family: 'Open Sans', sans-serif;
+    border: 2px solid transparent;
+    border-color: #000;
+}
+
+.profile-photo-btn-delete:hover{
+    background-color: #000;
+    color: #fff;
+    border-color: #000;
+}
+
+
+/*  Данные пользователя  */
+
+.profile-user-info {
+    margin-top: 50px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.input-container {
+    margin-bottom: 10px; 
+}
+
+.user-info-form input {
+    width: 600px;
+    height: 30px;
+    font-size: 20px;
+    padding: 15px;
+    border: 1px solid #000;
+    border-radius: 8px;
+}
+
+.user-info-form input::placeholder {
+    color: #aaa;
+}
+
+.user-info-form {
+    margin-top: -30px;
+    color: #000;
+    position: relative;
+}
+
+.user-info-form form {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.user-info-form button {
+    margin-top: 10px;
+    flex: none;
+    background-color: #5abd74;
+    color: #fff;
+    text-decoration: none;
+    width: 200px;
+    padding: 18px 30px;
+    font-size: 20px;
+    font-weight: 500;
+    border-radius: 7px;
+    border: 2px solid transparent;
+}
+
+.user-info-form button:hover {
+    background-color: #fff;
+    color: #5abd74;
+    border-color: #5abd74;
+}
+
+.user-passwd-form input {
+    width: 600px;
+    height: 30px;
+    font-size: 20px;
+    padding: 15px;
+    border: 1px solid #000;
+    border-radius: 8px;
+}
+
+.user-passwd-form input::placeholder {
+    color: #aaa;
+}
+
+.user-passwd-form {
+    margin-top: -30px;
+    color: #000;
+    position: relative;
+}
+
+.user-passwd-form form {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.user-passwd-form button {
+    margin-top: 10px;
+    flex: none;
+    background-color: #5abd74;
+    color: #fff;
+    text-decoration: none;
+    width: 200px;
+    padding: 18px 30px;
+    font-size: 20px;
+    font-weight: 500;
+    border-radius: 7px;
+    border: 2px solid transparent;
+}
+
+.user-passwd-form button:hover {
+    background-color: #fff;
+    color: #5abd74;
+    border-color: #5abd74;
+}
+ 
+.profile-user-info-name {
+    font-size: 28px;
+    font-weight: bold;
+    font-family: 'Open Sans', sans-serif;
+}
