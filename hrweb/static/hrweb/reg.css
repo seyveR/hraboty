@@ -106,7 +106,7 @@ body {
 
 
 .password-input input {
-    width: 80%;
+    width: 74%;
 }
 
 .toggle-password {
@@ -115,6 +115,19 @@ body {
     top: 45%;
     transform: translateY(-50%);
     cursor: pointer;
+}
+
+.lock-password {
+    position: absolute;
+    left: 75px;
+    top: 45%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+#password {
+    padding-right: 40px; /* Ширина правого изображения + небольшой отступ */
+    padding-left: 40px; /* Ширина левого изображения + небольшой отступ */
 }
 
 .password-input img {

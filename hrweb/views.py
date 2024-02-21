@@ -11,6 +11,9 @@ def about_us(request):
 def price(request): 
     return render(request, 'price.html')
 
+def search(request):
+    return render(request, 'search.html')
+
 def profile(request): 
     return render(request, 'profile.html')
 
