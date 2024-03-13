@@ -11,7 +11,85 @@
 
 <body>
     {% block header_down %}
-    
+    <div class="filters-info">        
+        <div class="input-container">
+            <div class="search-container">
+                <div class="search-input">
+                    <input type="text" id="search" name="search" placeholder="Найти вакансию" required>
+                    <img src="{% static 'hrweb/files/arrow.png' %}" class="toggle-search" alt="Искать">
+                    <img src="{% static 'hrweb/files/filters.png' %}" class="toggle-filters" alt="Доп фильтры">
+                </div>
+            </div>
+            
+        </div>
+        
+    </div>
+
+    <div id="filters-panel" class="filters-panel hidden">
+        <div class="filter">
+            <label for="experience">Опыт работы</label>
+            <div class="radio-buttons">
+                <input type="radio" id="novar" name="experience" value="novar">
+                <label for="exp1">Не имеет значения</label><br>
+                <input type="radio" id="noexp" name="experience" value="noexp">
+                <label for="exp2">Нет опыта</label><br>
+                <input type="radio" id="onetothreeexp" name="experience" value="onetothreeexp">
+                <label for="exp2">От 1 года до 3 лет</label><br>
+                <input type="radio" id="morethanthreeexp" name="experience" value="morethanthreeexp">
+                <label for="exp2">Более 3 лет</label><br>
+            </div>
+        </div>
+        <div class="filter">
+            <label for="employment-type">Тип занятости</label>
+            <div class="radio-buttons">
+                <input type="radio" id="full-time" name="employment-type" value="full-time">
+                <label for="full-time">Полная занятость</label><br>
+                <input type="radio" id="part-time" name="employment-type" value="part-time">
+                <label for="part-time">Частичная занятость</label><br>
+                <input type="radio" id="volonter" name="employment-type" value="volonter">
+                <label for="part-time">Волонтерство</label><br>
+                <input type="radio" id="stazhirovka" name="employment-type" value="stazhirovka">
+                <label for="part-time">Стажировка</label><br>
+            </div>
+        </div>
+        <div class="filter">
+            <label for="work-schedule">График работы</label>
+            <div class="radio-buttons">
+                <input type="radio" id="gibkiy" name="work-schedule" value="gibkiy">
+                <label for="schedule1">Гибкий график</label><br>
+                <input type="radio" id="full" name="work-schedule" value="full">
+                <label for="schedule2">Полный день</label><br>
+                <input type="radio" id="smen" name="work-schedule" value="smen">
+                <label for="schedule2">Сменный график</label><br>
+                <input type="radio" id="vahta" name="work-schedule" value="vahta">
+                <label for="schedule2">Вахтовый метод</label><br>
+            </div>
+        </div>
+        <div class="filter">
+            <label for="show-vacancies">Выводить вакансии</label>
+            <div class="radio-buttons">
+                <input type="radio" id="show-all" name="show-vacancies" value="show-all">
+                <label for="show-all">За все время</label><br>
+                <input type="radio" id="show-month" name="show-vacancies" value="show-new">
+                <label for="show-new">За месяц</label><br>
+                <input type="radio" id="show-week" name="show-vacancies" value="show-new">
+                <label for="show-new">За неделю</label><br>
+                <input type="radio" id="show-day" name="show-vacancies" value="show-new">
+                <label for="show-new">За сутки</label><br>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const filtersToggle = document.querySelector(".toggle-filters");
+            const filtersPanel = document.querySelector("#filters-panel");
+                        
+            filtersToggle.addEventListener("click", function() {
+                filtersPanel.classList.toggle("hidden");
+            });
+        });
+    </script>
     {% endblock %}
 
 </body>

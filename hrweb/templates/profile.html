@@ -89,15 +89,33 @@
                                 <div class="profile-user-info-name">
                                     <p>Текущий пароль</p>
                                 </div>
-                                <input type="text" id="firstname" name="firstname" required>
+                                <div class="password-container">
+                                    <div class="password-input">
+                                        <input type="password" id="newpass" name="newpass" required>
+                                        <img src="{% static 'hrweb/files/lock.png' %}" class="lock-password">
+
+                                    </div>
+                                </div>
+                                
                                 <div class="profile-user-info-name">
                                     <p>Новый пароль</p>
                                 </div>
-                                <input type="text" id="secondname" name="secondname" required>
+                                <div class="password-container">
+                                    <div class="password-input">
+                                        <input type="password" id="oldpass" name="oldpass" required>
+                                        <img src="{% static 'hrweb/files/lock.png' %}" class="lock-password">
+                                    </div>
+                                </div>
+
                                 <div class="profile-user-info-name">
                                     <p>Подтвердите новый пароль</p>
                                 </div>
-                                <input type="text" id="nickname" name="nickname" required>
+                                <div class="password-container">
+                                    <div class="password-input">
+                                        <input type="password" id="roldpass" name="roldpass" required>
+                                        <img src="{% static 'hrweb/files/lock.png' %}" class="lock-password">
+                                    </div>
+                                </div>
                             </div>
                             <button type="submit">Обновить</button>
                         </form>
