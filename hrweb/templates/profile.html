@@ -60,19 +60,19 @@
                                 <div class="profile-user-info-name">
                                     <p>Имя</p>
                                 </div>
-                                <input type="text" id="firstname" name="firstname"  placeholder="Например, Иван" required>
+                                <input type="text" id="first_name" name="first_name"  placeholder="Например, Иван" required>
                                 <div class="profile-user-info-name">
                                     <p>Фамилия</p>
                                 </div>
-                                <input type="text" id="secondname" name="secondname"  placeholder="Например, Федотов" required>
+                                <input type="text" id="last_name" name="last_name"  placeholder="Например, Федотов" required>
                                 <div class="profile-user-info-name">
                                     <p>Имя пользователя</p>
                                 </div>
-                                <input type="text" id="nickname" name="nickname"  placeholder="Например, фуллстек" required>
+                                <input type="text" id="username" name="username"  placeholder="Например, фуллстек" required>
                                 <div class="profile-user-info-name">
-                                    <p>Электронная почта</p>
+                                    <p>{{ user.username }}</p>
                                 </div>
-                                <input type="profile-email" id="email" name="email" pattern="[a-zA-Z0-9._%+-]+@(mail\.ru|yandex\.ru|gmail\.com)" placeholder="mail@example.ru" required>
+                                <input type="email" id="email" name="email" pattern="[a-zA-Z0-9._%+-]+@(mail\.ru|yandex\.ru|gmail\.com)" placeholder="mail@example.ru" required>
                                 <div class="profile-user-info-name">
                                     <p>Телефон</p>
                                 </div>
