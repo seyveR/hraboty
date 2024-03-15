@@ -4,7 +4,7 @@ from ...models import Vacancy
 from django.db import IntegrityError
 
 
-class VacancyParser:
+class RabotaParser:
     def __init__(self):
         self.base_url = "https://www.rabota.ru/vacancy/?sort=relevance&all_regions=1"
         print('start')
