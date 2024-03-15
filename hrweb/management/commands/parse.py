@@ -1,12 +1,14 @@
 from .rabota import RabotaParser
+from .trud import TrudvsemParser
 from django.core.management.base import BaseCommand
 
 
 class Command(BaseCommand):
-    help = 'Парсинг'
+    help = 'Запуск парсеров'
     
     def handle(self, *args, **options):
-        parser = RabotaParser()
-        page_count = parser.get_page_count()
-        for page_number in range(1, page_count + 1):
-            parser.parse_and_save_vacancies(page_number)
+        parsers = [RabotaParser(), TrudvsemParser()]
+
+        # Запускаем парсеры
+        for parser in parsers:
+            parser.parse_and_save_vacancies()

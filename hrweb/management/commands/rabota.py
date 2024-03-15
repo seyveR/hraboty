@@ -7,7 +7,6 @@ from django.db import IntegrityError
 class RabotaParser:
     def __init__(self):
         self.base_url = "https://www.rabota.ru/vacancy/?sort=relevance&all_regions=1"
-        print('start')
 
     def get_page_count(self):
         page_content = requests.get(url=self.base_url).text
@@ -16,16 +15,17 @@ class RabotaParser:
             pg = page.text.strip()
         return int(pg)
 
-    def parse_and_save_vacancies(self, page_number):
-        url = f"{self.base_url}&page={page_number}"
-        page_content = requests.get(url=url).text
-        soup = BeautifulSoup(page_content, features="lxml")
-        text_blocks = soup.find('div', {'class': 'infinity-scroll r-serp__infinity-list'}).findAll('div', {'class': 'vacancy-preview-card__top'})
-        
-        for block in text_blocks:
-            vacancy_url = "https://www.rabota.ru" + block.find('div', {'class': 'vacancy-preview-card__salary'}).find('a')['href']
-            description = block.find('div', {'class': 'vacancy-preview-card__short-description'}).text
-            self.save_vacancy_info(vacancy_url, description)
+    def parse_and_save_vacancies(self):
+        for page_number in range(1, self.get_page_count() + 1):
+            url = f"{self.base_url}&page={page_number}"
+            page_content = requests.get(url=url).text
+            soup = BeautifulSoup(page_content, features="lxml")
+            text_blocks = soup.find('div', {'class': 'infinity-scroll r-serp__infinity-list'}).findAll('div', {'class': 'vacancy-preview-card__top'})
+            
+            for block in text_blocks:
+                vacancy_url = "https://www.rabota.ru" + block.find('div', {'class': 'vacancy-preview-card__salary'}).find('a')['href']
+                description = block.find('div', {'class': 'vacancy-preview-card__short-description'}).text
+                self.save_vacancy_info(vacancy_url, description)
 
     def save_vacancy_info(self, vacancy_url, description):
         page_content = requests.get(url=vacancy_url).text
