@@ -1,12 +1,22 @@
 import requests
+import pymorphy2
 from bs4 import BeautifulSoup
 from ...models import Vacancy
 from django.db import IntegrityError
 
 
+
 class RabotaParser:
     def __init__(self):
         self.base_url = "https://www.rabota.ru/vacancy/?sort=relevance&all_regions=1"
+        self.morph = pymorphy2.MorphAnalyzer()
+        
+    def parse_city_name(self, city_name):
+        parsed = self.morph.parse(city_name)[0]
+        if 'NOUN' in parsed.tag:
+            return parsed.normal_form
+        else:
+            return city_name
 
     def get_page_count(self):
         page_content = requests.get(url=self.base_url).text
@@ -43,14 +53,14 @@ class RabotaParser:
         except Exception: 
             salary =soup.find('h3', {'class': 'vacancy-card__salary'}).text.strip().replace(" руб.",'').replace('\xa0','').replace('—',' —')
         date =soup.find('span', {'class': 'vacancy-system-info__updated-date'}).meta.get('content').split('T')[0]
-        area =soup.find('title').text.strip().replace(f'Вакансия {title} в ','').split()[0]
+        area =self.parse_city_name(soup.find('title').text.strip().replace(f'Вакансия {title} в ','').split()[0]).capitalize()
 
         # Извлекаем часть URL до параметра запроса, чтобы исключить его из проверки на уникальность
         vacancy_url_base = vacancy_url.split('?')[0]
 
         # Проверяем наличие записи с таким же базовым URL в базе данных
         if Vacancy.objects.filter(url__startswith=vacancy_url_base).exists():
-            print(f"Vacancy with base URL {vacancy_url_base} already exists. Skipping...")
+            print(f"{vacancy_url_base} already exists. Skipping...")
             return
 
         try:
@@ -63,7 +73,7 @@ class RabotaParser:
                 area=area,
                 date=date
             )
-            print(f"Vacancy {title} saved successfully.")
+            print(f"{title} saved successfully.")
         except IntegrityError:
             # Если возникает ошибка IntegrityError, значит запись была создана в другом потоке/процессе
             print(f"Failed to save vacancy {title}: IntegrityError.")

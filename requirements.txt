@@ -1,3 +1,5 @@
 lxml==5.1.0
 django==5.0.3
 beautifulsoup4==4.12.3
+pymorphy2==0.9.1
+pymorphy2-dicts-ru==2.4.417127.4579844
