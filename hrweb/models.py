@@ -27,3 +27,16 @@ class CustomUser(AbstractUser):
 
     def __str__(self):
         return self.username
+
+class Vacancy(models.Model):
+    name = models.CharField(max_length=255, verbose_name ='Название')
+    employer = models.CharField(max_length=255, verbose_name ='Работодатель')
+    url = models.URLField(verbose_name ='Ссылка')
+    salary = models.CharField(max_length=100, verbose_name ='Зарплата')
+    description = models.TextField(verbose_name ='Описание')
+    area = models.CharField(max_length=255, verbose_name ='Зона')
+    date = models.DateField(verbose_name ='Дата')
+    
+    class Meta:
+        verbose_name = 'Вакансия'
+        verbose_name_plural = 'Вакансии'
