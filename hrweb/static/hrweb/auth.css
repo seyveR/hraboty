@@ -127,3 +127,16 @@ body {
     width: 25px;
     height: 25px;
 }
+
+.error-message {
+    color: red;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 20px;
+    text-align: center;
+    margin-top: 10px; 
+}
+
+
+@media screen and (max-width: 1400px) and (max-height: 800px) {
+    
+}

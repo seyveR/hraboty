@@ -87,6 +87,7 @@ body {
     top: 60%; /* Центрирование по вертикали */
     left: calc(98%); /* Расстояние от правого края изображения */
     transform: translateY(20%); /* Центрирование по вертикали */
+    border: 2px solid black;
 }
 
 .tooltip a {
@@ -277,7 +278,63 @@ body {
 
 
 
+@media screen and (max-width: 1500px) {
+    .container {
+        margin: 20px 40px;
+    }
 
+    .header:after {
+        width: 100%;
+        height: 1px; 
+        background-color: #fff; 
+        margin-top: 16px; 
+        opacity: 0.15;
+        border-color: transparent;
+        border-style: solid;
+        box-shadow: 0px 4px 4px 0px rgba(0,0,0,0.3);
+    }
+    
+    .header-line {
+        padding-top: 0;
+        letter-spacing: .3px;
+    }
+    
+    
+    .header-logo img{
+        flex-shrink: 0;
+        width: 300px;
+        height: 54px;
+    }
+    
+    .nav-item {
+        font-weight: 300;
+        font-size: 20px;
+        margin-right: 60px;
+        transition: color 0.3s linear;
+    }
+    
+    .nav {
+        padding-right: 0px;
+    }
+    
+    
+    .button-log {
+        width: 60px; 
+        height: 60px; 
+    }
+    
+    .tooltip {
+        border-radius: 5px; 
+        padding: 9px; 
+        position: absolute;
+        z-index: 1; 
+        top: 60%; 
+        left: calc(97%); 
+        transform: translateY(20%); 
+        border: 2px solid black;
+    }
+    
+}
 
 
 

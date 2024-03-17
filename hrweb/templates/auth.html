@@ -75,6 +75,9 @@
             <div class="authreg-redirect">
                 <p>Еще нет аккаунта? <a href="/register">Зарегистрируйтесь</a></p>
             </div>
+            {% if error_message %}
+                <p class="error-message">{{ error_message }}</p>
+            {% endif %}
         </div>
     </div>
 </body>

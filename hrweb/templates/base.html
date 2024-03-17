@@ -45,11 +45,16 @@
                 </div>
     
                 <div class="btn">
+                    {% if user.is_authenticated %}
                     <a href="/profile">
                         <img class="button-log" src="{% static 'hrweb/files/profilelogo.png' %}">
                         <div class="tooltip">
-                            <a href="/auth">Войти</a>
+                            <a href="/logout">Выйти</a>
                         </div>
+                    {% else %}
+                    <a href="/auth">
+                        <img class="button-log" src="{% static 'hrweb/files/profilelogo.png' %}">
+                    {% endif %}
                     </a>
                 </div>
             </div>
