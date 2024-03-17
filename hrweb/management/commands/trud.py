@@ -53,7 +53,7 @@ class TrudvsemParser:
     def save_vacancy_info(self, name, employer, url, salary, description, area, date):
         # Проверяем наличие записи с таким же URL в базе данных
         if Vacancy.objects.filter(url=url).exists():
-            print(f"Vacancy with URL {url} already exists. Skipping...")
+            print(f"{url} already exists. Skipping...")
             return
 
         try:
@@ -66,7 +66,7 @@ class TrudvsemParser:
                 area=area,
                 date=date
             )
-            print(f"Vacancy {name} saved successfully.")
+            print(f"{name} saved successfully.")
         except IntegrityError:
             # Если возникает ошибка IntegrityError, значит запись была создана в другом потоке/процессе
             print(f"Failed to save vacancy {name}: IntegrityError.")

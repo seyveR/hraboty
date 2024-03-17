@@ -50,7 +50,7 @@ class RabotaParser:
 
         # Проверяем наличие записи с таким же базовым URL в базе данных
         if Vacancy.objects.filter(url__startswith=vacancy_url_base).exists():
-            print(f"Vacancy with base URL {vacancy_url_base} already exists. Skipping...")
+            print(f"{vacancy_url_base} already exists. Skipping...")
             return
 
         try:
@@ -63,7 +63,7 @@ class RabotaParser:
                 area=area,
                 date=date
             )
-            print(f"Vacancy {title} saved successfully.")
+            print(f"{title} saved successfully.")
         except IntegrityError:
             # Если возникает ошибка IntegrityError, значит запись была создана в другом потоке/процессе
             print(f"Failed to save vacancy {title}: IntegrityError.")
