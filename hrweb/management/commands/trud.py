@@ -36,12 +36,14 @@ class TrudvsemParser:
                         salary = vac['vacancy']['salary_min']
                     else:
                         salary = vac['vacancy']['salary_max']
+                    if salary == 0:
+                        salary = 'Не указано'
                     try:
                         description = re.sub(r'<[^>]*>', '', vac['vacancy']['duty']).replace("\n",' ').replace("\r",'').replace("&nbsp;",'').replace('&middot','')
                     except Exception as ex:
                         description = 'Не указано'
                     try:
-                        area = vac['vacancy']['region']['name']
+                        area = (vac['vacancy']['region']['name']).replace('Город ', '')
                     except:
                         area = 'Не указано'
                     date = vac['vacancy']['creation-date']
