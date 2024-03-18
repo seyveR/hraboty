@@ -1,5 +1,3 @@
-
-
 .filters-info {
     margin-top: 50px;
 }
@@ -71,12 +69,11 @@
 
 .filters-panel {
     position: absolute;
-    top: 215px;
     left: 0;
     width: 100%;
     height: 800px;
     padding: 0px 3 0px;
-    margin-top: 30px;
+    margin-top: 5px;
     background-color: #fff;
     /* border: 1px solid #ccc; */
     z-index: 1000;
@@ -106,4 +103,46 @@
     margin-top: -28px;
     margin-left: 100px;
     margin-bottom: 40px;
+}
+
+.vacancies {
+    justify-content:end;
+    padding-left: 300px;
+    padding-right: 200px;
+}
+
+.vacancy-box {
+    background-color: #f0f0f0; 
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 5px 20px;
+    margin: 5px auto; 
+    width: calc(100%); 
+    box-sizing: border-box;
+}
+
+.name_vac {
+    font-size: 20px;
+    font-weight: bold;
+    padding-bottom: 10px;
+}
+
+.info_vac {
+    padding-bottom: 10px;
+}
+
+.pagination {
+    text-align: center; /* Выравнивание по центру */
+    font-size: 18px; /* Размер шрифта */
+    font-family: 'Open Sans', sans-serif; /* Шрифт */
+}
+
+.pagination a {
+    color: black; /* Черный цвет ссылок */
+    text-decoration: none; /* Убираем подчеркивание */
+    margin: 0 5px; /* Отступы между ссылками */
+}
+
+.pagination a:hover {
+    color: green; /* Зеленый цвет при наведении */
 }

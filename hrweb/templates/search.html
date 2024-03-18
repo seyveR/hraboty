@@ -15,8 +15,20 @@
         <div class="input-container">
             <div class="search-container">
                 <div class="search-input">
-                    <input type="text" id="search" name="search" placeholder="Найти вакансию" required>
-                    <img src="{% static 'hrweb/files/arrow.png' %}" class="toggle-search" alt="Искать">
+                    <form id="search-form" method="GET" action="{% url 'search' %}">
+                        <input type="text" id="search" name="search" placeholder="Найти вакансию" value="{{ search_query|default_if_none:'' }}">
+                        <img id="search-submit" src="{% static 'hrweb/files/arrow.png' %}" class="toggle-search" alt="Искать">
+                    </form>
+                    <script>
+                        document.addEventListener("DOMContentLoaded", function() {
+                            const searchSubmit = document.getElementById("search-submit");
+                            const searchForm = document.getElementById("search-form");
+                    
+                            searchSubmit.addEventListener("click", function() {
+                                searchForm.submit();
+                            });
+                        });
+                    </script>
                     <img src="{% static 'hrweb/files/filters.png' %}" class="toggle-filters" alt="Доп фильтры">
                 </div>
             </div>
@@ -92,5 +104,51 @@
     </script>
     {% endblock %}
 
+    {% block info %}
+    <div class="vacancies">
+        {% for vacancy in vacancies %}
+        <div class="vacancy-box">
+            <div class="name_vac">{{vacancy.name}}</div> 
+            <div class="info_vac"><strong>Работодатель:</strong> {{ vacancy.employer }}</div> 
+            <div class="info_vac"><strong>Зарплата:</strong> {{ vacancy.salary }}</div> 
+            <div class="info_vac"><strong>Описание:</strong> {{ vacancy.description }}</div>
+            <div class="info_vac"><strong>Зона:</strong> {{ vacancy.area }}</div>
+            <div class="info_vac"><strong>Дата:</strong> {{ vacancy.date }}</div>
+        </div>
+        {% empty %}
+        <p>Нет результатов для "{{ query }}".</p>
+        {% endfor %}
+    </div>
+
+    <div class="pagination">
+        <span class="step-links">
+            {% if previous_page_number %}
+                {% if show_first_page_link %}
+                    <a href="?page={{ first_page_number }}">{{ first_page_number }}&nbsp;&nbsp;...</a>
+                {% endif %}
+                <a href="?page={{ previous_page_number }}">{{ previous_page_number }}</a>
+            {% endif %}
+    
+            <span class="current">
+                <a href="?page={{ vacancies.number }}">{{ vacancies.number }}</a>
+            </span>
+    
+            {% if next_page_number %}
+                <a href="?page={{ next_page_number }}">{{ next_page_number }}</a>
+                {% if show_last_page_link %}
+                    <a href="?page={{ total_pages }}">...&nbsp;&nbsp;{{ total_pages }}</a>
+                {% endif %}
+            {% endif %}
+        </span>
+    </div>
+    
+    
+    {% endblock %}
+
 </body>
 </html>
+
+
+
+
+

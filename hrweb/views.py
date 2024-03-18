@@ -3,10 +3,13 @@ from django.shortcuts import render, redirect
 from .forms import UserRegistrationForm, ProfileUpdateForm, PasswordChangeForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from .models import CustomUser
+from .models import CustomUser, Vacancy
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.hashers import make_password
 from django.urls import reverse
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.db.models import Q, CharField, Value
+from django.db.models.functions import Lower
 
 
 def home(request): 
@@ -20,7 +23,42 @@ def price(request):
     return render(request, 'price.html')
 
 def search(request):
-    return render(request, 'search.html')
+    query = request.GET.get('search')
+    vacancies_list = Vacancy.objects.all()
+    
+    if query and query.strip():  # Если введен непустой поисковый запрос
+        # Переводим поисковой запрос в нижний регистр
+        vacancies_list = vacancies_list.filter(
+            Q(name__icontains=query) | 
+            Q(description__icontains=query) | 
+            Q(area__icontains=query)
+        )
+
+    paginator = Paginator(vacancies_list, 10)  # Показывать по 3 вакансии на странице
+    page = request.GET.get('page')
+    try:
+        vacancies = paginator.page(page)
+    except PageNotAnInteger:
+        vacancies = paginator.page(1)
+    except EmptyPage:
+        vacancies = paginator.page(paginator.num_pages)
+
+    # Создаем переменные для первой страницы и всего количества страниц
+    first_page_number = 1
+    total_pages = paginator.num_pages
+
+    # Определите переменную для номера предыдущей страницы
+    previous_page_number = vacancies.previous_page_number() if vacancies.has_previous() else None
+    # Определите переменную для номера следующей страницы
+    next_page_number = vacancies.next_page_number() if vacancies.has_next() else None
+
+    # Определите, когда отображать ссылку на первую страницу
+    show_first_page_link = vacancies.number > 2
+
+    # Определите, когда отображать ссылку на последнюю страницу
+    show_last_page_link = vacancies.number < vacancies.paginator.num_pages - 1
+    
+    return render(request, 'search.html', {'vacancies': vacancies, 'search_query': query, 'first_page_number': first_page_number, 'total_pages': total_pages, 'previous_page_number': previous_page_number, 'next_page_number': next_page_number, 'show_first_page_link': show_first_page_link, 'show_last_page_link': show_last_page_link})
 
 @login_required
 def profile(request):
