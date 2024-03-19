@@ -47,12 +47,13 @@ class TrudvsemParser:
                     except:
                         area = 'Не указано'
                     date = vac['vacancy']['creation-date']
+                    schedule = vac['vacancy']['schedule']
 
-                    self.save_vacancy_info(name, employer, url, salary, description, area, date)
+                    self.save_vacancy_info(name, employer, url, salary, description, area, date, schedule)
             else:
                 break
 
-    def save_vacancy_info(self, name, employer, url, salary, description, area, date):
+    def save_vacancy_info(self, name, employer, url, salary, description, area, date, schedule):
         # Проверяем наличие записи с таким же URL в базе данных
         if Vacancy.objects.filter(url=url).exists():
             print(f"{url} already exists. Skipping...")
@@ -66,7 +67,8 @@ class TrudvsemParser:
                 salary=salary,
                 description=description,
                 area=area,
-                date=date
+                date=date,
+                schedule=schedule
             )
             print(f"{name} saved successfully.")
         except IntegrityError:
