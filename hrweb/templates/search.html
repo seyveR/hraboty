@@ -118,15 +118,15 @@
                     <ul class="group-items-ul">
                         <li class="item-li">
                             <label class="item-checkbox-label">
-                                <input name="full_day" class="item-checkbox-element" type="checkbox">
+                                <input name="check_sched" class="item-checkbox-element" type="checkbox" value="Полный день">
                                 <span class="item-checkbox-text">
-                                    <span>Полный рабочий день</span>&nbsp;
+                                    <span>Полный день</span>&nbsp;
                                 </span>
                             </label>
                         </li>
                         <li class="item-li">
                             <label class="item-checkbox-label">
-                                <input name="part_time" class="item-checkbox-element" type="checkbox">
+                                <input name="check_sched" class="item-checkbox-element" type="checkbox" value="От 4 часов в день">
                                 <span class="item-checkbox-text">
                                     <span>От 4 часов в день</span>&nbsp;
                                 </span>
@@ -134,30 +134,59 @@
                         </li>
                         <li class="item-li">
                             <label class="item-checkbox-label">
-                                <input name="not_full" class="item-checkbox-element" type="checkbox">
+                                <input name="check_sched" class="item-checkbox-element" type="checkbox" value="Не полный день">
                                 <span class="item-checkbox-text">
-                                    <span>Неполный день</span>&nbsp;
+                                    <span>Не полный день</span>&nbsp;
                                 </span>
                             </label>
                         </li>
                         <li class="item-li">
                             <label class="item-checkbox-label">
-                                <input name="evening" class="item-checkbox-element" type="checkbox">
+                                <input name="check_sched" class="item-checkbox-element" type="checkbox" value="Сменный график">
                                 <span class="item-checkbox-text">
-                                    <span>По вечерам</span>&nbsp;
+                                    <span>Сменный график</span>&nbsp;
                                 </span>
                             </label>
                         </li>
                         <li class="item-li">
                             <label class="item-checkbox-label">
-                                <input name="weekends" class="item-checkbox-element" type="checkbox">
+                                <input name="check_sched" class="item-checkbox-element" type="checkbox" value="Гибкий график">
                                 <span class="item-checkbox-text">
-                                    <span>По выходным</span>&nbsp;
+                                    <span>Гибкий график</span>&nbsp;
                                 </span>
                             </label>
                         </li>
                     </ul>
                 </div>
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+                <script>
+                    function handleShedChange() {
+                        var selectedShed = $('input[name="check_sched"]:checked').val();
+                        console.log("Selected shed level:", selectedShed);
+                        var searchQuery = $('input[name="search"]').val(); // Получаем текущее значение поискового запроса
+                        // Отправляем AJAX запрос на сервер
+                        $.ajax({
+                            url: window.location.href,
+                            type: 'GET',
+                            data: {
+                                search: searchQuery,
+                                'schedule[]': $('input[name="check_sched"]:checked').map(function(){
+                                    return $(this).val();
+                                }).get()
+                            },
+                            success: function(data) {
+                                console.log("Received Income data:", data); 
+                                // Обновляем только список вакансий без перезагрузки страницы
+                                $('.vacancies').html($(data).find('.vacancies').html());
+                            }
+                        });
+                    }
+                
+                    // Добавляем обработчик события на изменение состояния радио кнопок уровня дохода
+                    $(document).ready(function() {
+                        $('input[name="check_sched"]').change(handleShedChange);
+                    });
+                </script>
 
                 <div class="filters-group-name">
                     <span class="group-name">
