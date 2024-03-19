@@ -109,7 +109,7 @@
 }
 
 .user-info-form input {
-    width: 600px;
+    width: 500px;
     height: 30px;
     font-size: 20px;
     padding: 15px;
@@ -162,6 +162,7 @@
     border-radius: 8px;
 }
 
+
 .user-passwd-form input::placeholder {
     color: #aaa;
 }
@@ -169,6 +170,7 @@
 .user-passwd-form {
     margin-top: -30px;
     color: #000;
+    margin-right: 80px;
     position: relative;
 }
 
@@ -240,10 +242,13 @@
     height: 25px;
 }
 
+.profile-image {
+    border-radius: 50%;
+}
 
 
 
-@media screen and (max-width: 1500px) {
+@media screen and (max-width: 1630px) {
     .profile-container {
         margin: 30px 120px;
     }
@@ -322,6 +327,7 @@
     
     .user-info-form {
         margin-top: -30px;
+        
     }
     
     .user-info-form button {
@@ -352,6 +358,7 @@
     
     .user-passwd-form {
         margin-top: -30px;
+        margin-right: 0px;
     }
     
     

@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 
     <title>Хочу Работу</title>
@@ -19,7 +20,7 @@
                         <input type="text" id="search" name="search" placeholder="Найти вакансию" value="{{ search_query|default_if_none:'' }}">
                         <img id="search-submit" src="{% static 'hrweb/files/arrow.png' %}" class="toggle-search" alt="Искать">
                     </form>
-                    <script>
+                    <!-- <script>
                         document.addEventListener("DOMContentLoaded", function() {
                             const searchSubmit = document.getElementById("search-submit");
                             const searchForm = document.getElementById("search-form");
@@ -29,7 +30,7 @@
                             });
                         });
                     </script>
-                    <img src="{% static 'hrweb/files/filters.png' %}" class="toggle-filters" alt="Доп фильтры">
+                    <img src="{% static 'hrweb/files/filters.png' %}" class="toggle-filters" alt="Доп фильтры"> -->
                 </div>
             </div>
             
@@ -105,21 +106,199 @@
     {% endblock %}
 
     {% block info %}
-    <div class="vacancies">
-        {% for vacancy in vacancies %}
-        <div class="vacancy-box">
-            <div class="name_vac">{{vacancy.name}}</div> 
-            <div class="info_vac"><strong>Работодатель:</strong> {{ vacancy.employer }}</div> 
-            <div class="info_vac"><strong>Зарплата:</strong> {{ vacancy.salary }}</div> 
-            <div class="info_vac"><strong>Описание:</strong> {{ vacancy.description }}</div>
-            <div class="info_vac"><strong>Зона:</strong> {{ vacancy.area }}</div>
-            <div class="info_vac"><strong>Дата:</strong> {{ vacancy.date }}</div>
-        </div>
-        {% empty %}
-        <p>Нет результатов для "{{ query }}".</p>
-        {% endfor %}
-    </div>
+    <div class="content-wrapper">
+        <div class="filters-container">
+            <div class="filters-vacancy">
+                <div class="filters-group-name">
+                    <span class="group-name">
+                        <legend>График работы</legend>
+                    </span>
+                </div>
+                <div class="filters-group-items">
+                    <ul class="group-items-ul">
+                        <li class="item-li">
+                            <label class="item-checkbox-label">
+                                <input name="full_day" class="item-checkbox-element" type="checkbox">
+                                <span class="item-checkbox-text">
+                                    <span>Полный рабочий день</span>&nbsp;
+                                </span>
+                            </label>
+                        </li>
+                        <li class="item-li">
+                            <label class="item-checkbox-label">
+                                <input name="part_time" class="item-checkbox-element" type="checkbox">
+                                <span class="item-checkbox-text">
+                                    <span>От 4 часов в день</span>&nbsp;
+                                </span>
+                            </label>
+                        </li>
+                        <li class="item-li">
+                            <label class="item-checkbox-label">
+                                <input name="not_full" class="item-checkbox-element" type="checkbox">
+                                <span class="item-checkbox-text">
+                                    <span>Неполный день</span>&nbsp;
+                                </span>
+                            </label>
+                        </li>
+                        <li class="item-li">
+                            <label class="item-checkbox-label">
+                                <input name="evening" class="item-checkbox-element" type="checkbox">
+                                <span class="item-checkbox-text">
+                                    <span>По вечерам</span>&nbsp;
+                                </span>
+                            </label>
+                        </li>
+                        <li class="item-li">
+                            <label class="item-checkbox-label">
+                                <input name="weekends" class="item-checkbox-element" type="checkbox">
+                                <span class="item-checkbox-text">
+                                    <span>По выходным</span>&nbsp;
+                                </span>
+                            </label>
+                        </li>
+                    </ul>
+                </div>
 
+                <div class="filters-group-name">
+                    <span class="group-name">
+                        <legend>Уровень дохода</legend>
+                    </span>
+                </div>
+                <div class="filters-group-items">
+                    <ul class="group-items-ul">
+                        <li class="item-li">
+                            <label class="item-radio-label">
+                                <input name="income_level" class="item-radio-element" type="radio">
+                                <span class="item-radio-text">
+                                    <span>Не имеет значения</span>&nbsp;
+                                </span>
+                            </label>
+                        </li>
+                        <li class="item-li">
+                            <label class="item-radio-label">
+                                <input name="income_level" class="item-radio-element" type="radio" value="30000">
+                                <span class="item-radio-text">
+                                    <span>от 30 000</span>&nbsp;
+                                </span>
+                            </label>
+                        </li>
+                        <li class="item-li">
+                            <label class="item-radio-label">
+                                <input name="income_level" class="item-radio-element" type="radio" value="50000">
+                                <span class="item-radio-text">
+                                    <span>от 50 000</span>&nbsp;
+                                </span>
+                            </label>
+                        </li>
+                        <li class="item-li">
+                            <label class="item-radio-label">
+                                <input name="income_level" class="item-radio-element" type="radio" value="100000">
+                                <span class="item-radio-text">
+                                    <span>от 100 000</span>&nbsp;
+                                </span>
+                            </label>
+                        </li>
+                        <li class="item-li">
+                            <label class="item-radio-label">
+                                <input name="income_level" class="item-radio-element" type="radio" value="150000">
+                                <span class="item-radio-text">
+                                    <span>от 150 000</span>&nbsp;
+                                </span>
+                            </label>
+                        </li>
+                        <li class="item-li">
+                            <label class="item-radio-label">
+                                <input name="income_level" class="item-radio-element" type="radio" value="200000">
+                                <span class="item-radio-text">
+                                    <span>от 200 000</span>&nbsp;
+                                </span>
+                            </label>
+                        </li>
+                    </ul>               
+                </div>
+                
+
+                <div class="filters-group-name">
+                    <span class="group-name">
+                        <legend>Регион</legend>
+                    </span>
+                </div>
+                
+                <div class="filters-group-items">
+                    <ul class="group-items-ul">
+                        <label class="label_reg" for="region">Выберите регион:</label>
+                        <select name="region_value" id="region_value">
+                            <option value="all">Все регионы</option>
+                            {% for area in all_areas %}
+                                <option value="{{ area }}" {% if selected_region == area %}selected{% endif %}>{{ area }}</option>
+                            {% endfor %}
+                        </select>
+                    </ul>               
+                </div>
+                
+                <script>
+                    document.addEventListener("DOMContentLoaded", function() {
+                        var selectedRegion = "{{ selected_region }}";
+                        if (selectedRegion !== "") {
+                            document.getElementById("region_value").value = selectedRegion;
+                        }
+                    });
+                
+                    document.getElementById("region_value").addEventListener("change", function() {
+                        var selectedRegion = this.value;
+                        window.location.href = "/search?search=" + encodeURIComponent(selectedRegion);
+                    });
+                </script>
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+                <script>
+                    // Функция для отправки AJAX запроса на сервер при изменении состояния радио кнопок уровня дохода
+                    function handleIncomeLevelChange() {
+                        var selectedIncomeLevel = $('input[name="income_level"]:checked').val();
+                        console.log("Selected income level:", selectedIncomeLevel);
+                        var searchQuery = $('input[name="search"]').val(); // Получаем текущее значение поискового запроса
+                        // Отправляем AJAX запрос на сервер
+                        $.ajax({
+                            url: window.location.href,
+                            type: 'GET',
+                            data: {
+                                search: searchQuery,
+                                income_level: selectedIncomeLevel
+                            },
+                            success: function(data) {
+                                console.log("Received Income data:", data); 
+                                // Обновляем только список вакансий без перезагрузки страницы
+                                $('.vacancies').html($(data).find('.vacancies').html());
+                            }
+                        });
+                    }
+                
+                    // Добавляем обработчик события на изменение состояния радио кнопок уровня дохода
+                    $(document).ready(function() {
+                        $('input[name="income_level"]').change(handleIncomeLevelChange);
+                    });
+                </script>
+            </div>
+        </div>
+
+        <div class="vacancies-container">
+            <div class="vacancies">
+                {% for vacancy in vacancies %}
+                <div class="vacancy-box">
+                    <div class="name_vac">{{vacancy.name}}</div> 
+                    <div class="info_vac_salary"><strong>{{ vacancy.salary }} ₽</strong></div> 
+                    <div class="info_vac_empl">{{ vacancy.employer }}</div> 
+                    <div class="info_vac_area">{{ vacancy.area }}</div>
+                    <button class="btn-more-info">Подробнее</button>
+                    <button class="btn-call">Откликнуться</button>
+                </div>
+                {% empty %}
+                <p>Нет результатов для "{{ query }}".</p>
+                {% endfor %}
+            </div>
+    
+        </div>
+        
+    </div>
     <div class="pagination">
         <span class="step-links">
             {% if previous_page_number %}
@@ -128,11 +307,11 @@
                 {% endif %}
                 <a href="?page={{ previous_page_number }}">{{ previous_page_number }}</a>
             {% endif %}
-    
+        
             <span class="current">
                 <a href="?page={{ vacancies.number }}">{{ vacancies.number }}</a>
             </span>
-    
+        
             {% if next_page_number %}
                 <a href="?page={{ next_page_number }}">{{ next_page_number }}</a>
                 {% if show_last_page_link %}
@@ -141,6 +320,8 @@
             {% endif %}
         </span>
     </div>
+
+    
     
     
     {% endblock %}

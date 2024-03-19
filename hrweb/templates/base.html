@@ -19,8 +19,14 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,800;1,500&family=Tinos:wght@400;700&display=swap" rel="stylesheet">
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cropperjs/dist/cropper.min.css">
+
     <link rel="icon" href="{% static 'images/prostor_icon.ico' %}" type="image/x-icon">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/cropperjs/dist/cropper.min.js"></script>
+
 
     <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
@@ -46,16 +52,21 @@
     
                 <div class="btn">
                     {% if user.is_authenticated %}
-                    <a href="/profile">
-                        <img class="button-log" src="{% static 'hrweb/files/profilelogo.png' %}">
-                        <div class="tooltip">
-                            <a href="/logout">Выйти</a>
-                        </div>
+                        <a href="/profile">
+                            {% if decoded_image %}
+                                <img class="button-log" src="data:image/jpeg;base64,{{ decoded_image }}">
+                            {% else %}
+                                <img class="button-log" src="{% static 'hrweb/files/profilelogo.png' %}">
+                            {% endif %}
+                            <div class="tooltip">
+                                <a href="/logout">Выйти</a>
+                            </div>
+                        </a>
                     {% else %}
-                    <a href="/auth">
-                        <img class="button-log" src="{% static 'hrweb/files/profilelogo.png' %}">
+                        <a href="/auth">
+                            <img class="button-log" src="{% static 'hrweb/files/profilelogo.png' %}">
+                        </a>
                     {% endif %}
-                    </a>
                 </div>
             </div>
         </div>

@@ -6,7 +6,7 @@
     margin-bottom: 10px; 
     width: 50%; /* Пример: увеличиваем ширину контейнера до 80% от ширины родительского элемента */
     max-width: 600px; /* Пример: устанавливаем максимальную ширину контейнера */
-    margin: 0 10px;
+    margin: 0 300px;
 }
 
 .search-input input {
@@ -17,7 +17,7 @@
     padding: 15px;
     margin-bottom: 10px; /* Отступ между полями для ввода */
     border: 1px solid #000;
-    border-radius: 30px;
+    border-radius: 10px;
 }
 
 .search-input input::placeholder {
@@ -107,42 +107,144 @@
 
 .vacancies {
     justify-content:end;
-    padding-left: 300px;
-    padding-right: 200px;
+    padding-left: 0px;
+    padding-right: 350px;
 }
 
 .vacancy-box {
-    background-color: #f0f0f0; 
-    border: 1px solid #ccc;
+    background-color: #FFFFFF; 
     border-radius: 10px;
     padding: 5px 20px;
     margin: 5px auto; 
     width: calc(100%); 
     box-sizing: border-box;
+    font-family: 'Open Sans', sans-serif;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); 
+    margin-bottom: 25px;
 }
 
 .name_vac {
     font-size: 20px;
     font-weight: bold;
-    padding-bottom: 10px;
+    padding-bottom: 5px;
+    color: #5abd74;
+    margin-top: 20px;
 }
 
-.info_vac {
-    padding-bottom: 10px;
+.info_vac_empl {
+    padding-bottom: 3px;
+}
+
+.info_vac_area {
+    padding-bottom: 40px;
+}
+
+.info_vac_salary {
+    padding-bottom: 20px;
+    font-size: 25px;
+    letter-spacing: .7px;
+}
+
+.btn-more-info {
+    background-color: #000;
+    color: #fff;
+    text-decoration: none;
+    padding: 8px 24px;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 5px;
+    font-family: 'Open Sans', sans-serif;
+    border: 2px solid transparent;
+    margin-bottom: 20px;
+}
+
+.btn-more-info:hover{
+    background-color: #fff;
+    color: #000;
+    border-color: #000;
+}
+
+.btn-call {
+    background-color: #5abd74;
+    color: #fff;
+    text-decoration: none;
+    padding: 8px 24px;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 5px;
+    font-family: 'Open Sans', sans-serif;
+    border: 2px solid transparent;
+}
+
+.btn-call:hover{
+    background-color: #fff;
+    color: #5abd74;
+    border-color: #5abd74;
 }
 
 .pagination {
-    text-align: center; /* Выравнивание по центру */
-    font-size: 18px; /* Размер шрифта */
-    font-family: 'Open Sans', sans-serif; /* Шрифт */
+    text-align: center; 
+    font-size: 18px; 
+    font-family: 'Open Sans', sans-serif; 
 }
 
 .pagination a {
-    color: black; /* Черный цвет ссылок */
-    text-decoration: none; /* Убираем подчеркивание */
-    margin: 0 5px; /* Отступы между ссылками */
+    color: black; 
+    text-decoration: none; 
+    margin: 0 5px; 
 }
 
 .pagination a:hover {
-    color: green; /* Зеленый цвет при наведении */
+    color: #5abd74; 
+}
+
+.content-wrapper {
+    display: flex;
+    justify-content: space-between;
+}
+
+.filters-container {
+    width: 20%; 
+    padding-left: 350px;
+}
+
+.filters-vacancy {
+    font-family: 'Open Sans', sans-serif; 
+}
+
+.vacancies-container {
+    width: 75%; 
+}
+
+
+.group-items-ul {
+    list-style: none; 
+    font-size: 14px;
+}
+
+.item-li {
+    margin-bottom: 10px; 
+    font-size: 14px;
+}
+
+.group-name {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+#region_value {
+    padding: 6px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    outline: none;
+    width: 120px; 
+}
+
+#region_value option {
+    padding: 6px;
+    font-size: 14px;
 }

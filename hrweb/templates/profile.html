@@ -23,32 +23,38 @@
                     <hr>
                     
 
-                    <div class="profile-main-info">
-                        <div class="profile-photo">
-                            <img class="profile-image" src="{% static 'hrweb/files/profilelogo.png' %}">
-                        </div>
+                    <form method="post" id="avatarForm" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="profile-main-info">
+                            <div class="profile-photo" id="profile-photo">
+                                <label for="avatar_input">
+                                    {% if decoded_image %}
+                                         <img class="profile-image rounded-circle" src="data:image/jpeg;base64,{{ decoded_image }}">
+                                    {% else %}
+                                        <img class="profile-image" src="{% static 'hrweb/files/profilelogo.png' %}">
+                                    {% endif %}
+                                </label>
+                                <input type="file" id="avatar_input" name="avatar" style="display: none;">
+                            </div>
+                            
+                            <div class="profile-name">
+                                <div class="profile-initials">
+                                    {{ user.first_name }} {{ user.last_name }}
+                                </div>
+                                <div class="profile-nickname">
+                                    {{ user.username }}
+                                </div>
+                                <div class="profile-location">
+                                    {{ user.email }}
+                                </div>
+                            </div>
+                            
+                            <button class="profile-photo-btn-update" type="submit" name="profile_submit" form="avatarForm">Обновить</button>
 
-                        <div class="profile-name">
-                            <div class="profile-initials">
-                                {{ user.first_name }} {{ user.last_name }}
-                            </div>
-                            <div class="profile-nickname">
-                                {{ user.username }}
-                            </div>
-                            <div class="profile-location">
-                                {{ user.email }}
-                            </div>
+                            <button class="profile-photo-btn-delete" type="submit" name="delete_avatar" form="avatarForm">Удалить</button>
                         </div>
-                        
-                        <div class="profile-photo-btn-update">
-                            Обновить
-                        </div>
-                        <div class="profile-photo-btn-delete">
-                            Удалить
-                        </div>
-                    
-                        
-                    </div>
+                    </form>
+
                     <hr>
                 </div>
 
@@ -66,8 +72,7 @@
                                     value="{{ user.first_name }}"
                                 {% else %}
                                     placeholder="Например, Иван"
-                                {% endif %}
-                                required>
+                                {% endif %}>
 
                                 <div class="profile-user-info-name">
                                     <p>Фамилия</p>
@@ -77,8 +82,7 @@
                                     value="{{ user.last_name }}"
                                 {% else %}
                                     placeholder="Например, Федотов"
-                                {% endif %}
-                                required>
+                                {% endif %}>
                                 <div class="profile-user-info-name">
                                     <p>Имя пользователя</p>
                                 </div>
@@ -107,8 +111,7 @@
                                     value="{{ user.phone }}"
                                 {% else %}
                                     placeholder="+7"
-                                {% endif %}
-                                required>
+                                {% endif %}>
                             </div>
                             <button type="submit" name="profile_submit">Сохранить</button>
                         </form>

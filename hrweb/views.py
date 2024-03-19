@@ -10,31 +10,100 @@ from django.urls import reverse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q, CharField, Value
 from django.db.models.functions import Lower
+from django.core.files.base import ContentFile
+import base64
+from django.contrib.auth.hashers import check_password
+import re
 
+def extract_salary_range(salary_str):
+    # Проверяем специальные случаи
+    if salary_str.lower() in ['по договоренности', 'не указано']:
+        print("Special case:", salary_str)
+        return None, None  # Возвращаем None для этих случаев
+    
+    # Проверяем формат зарплаты в виде "от X до Y"
+    matches_range = re.match(r'от\s*(\d+)\s*до\s*(\d+)', salary_str, re.IGNORECASE)
+    if matches_range:
+        min_salary = int(matches_range.group(1))
+        max_salary = int(matches_range.group(2))
+        print("Min salary:", min_salary)
+        print("Max salary:", max_salary)
+        return min_salary, max_salary
+    
+    # Проверяем формат зарплаты в виде диапазона "X - Y"
+    matches_hyphen = re.match(r'(\d+)\s*-\s*(\d+)', salary_str)
+    if matches_hyphen:
+        min_salary = int(matches_hyphen.group(1))
+        max_salary = int(matches_hyphen.group(2))
+        print("Min salary:", min_salary)
+        print("Max salary:", max_salary)
+        return min_salary, max_salary
+    
+    # Проверяем формат зарплаты в виде "от X"
+    matches_from = re.match(r'от\s*(\d+)', salary_str, re.IGNORECASE)
+    if matches_from:
+        min_salary = int(matches_from.group(1))
+        print("Min salary:", min_salary)
+        return min_salary, None
+    
+    # Проверяем формат зарплаты в виде просто числа
+    matches_single = re.match(r'(\d+)', salary_str)
+    if matches_single:
+        min_salary = int(matches_single.group(1))
+        print("Single salary:", min_salary)
+        return min_salary, None
+    
+    # Если не найдено числовых значений, возвращаем None
+    return None, None
 
 def home(request): 
-    return render(request, 'home.html')
+    user = request.user
+    decoded_image = None
+    if user.is_authenticated and hasattr(user, 'avatar'):
+        decoded_image = user.avatar
+
+    context = {'user': user, 'decoded_image': decoded_image}
+    return render(request, 'home.html', context)
 
 
 def about_us(request): 
-    return render(request, 'aboutus.html')
+    user = request.user
+    decoded_image = None
+    if user.is_authenticated and hasattr(user, 'avatar'):
+        decoded_image = user.avatar
+
+    context = {'user': user, 'decoded_image': decoded_image}
+    return render(request, 'aboutus.html', context)
 
 def price(request): 
-    return render(request, 'price.html')
+    user = request.user
+    decoded_image = None
+    if user.is_authenticated and hasattr(user, 'avatar'):
+        decoded_image = user.avatar
+
+    context = {'user': user, 'decoded_image': decoded_image}
+    return render(request, 'price.html', context)
 
 def search(request):
     query = request.GET.get('search')
     vacancies_list = Vacancy.objects.all()
-    
-    if query and query.strip():  # Если введен непустой поисковый запрос
-        # Переводим поисковой запрос в нижний регистр
+
+    if query and query.strip(): 
         vacancies_list = vacancies_list.filter(
             Q(name__icontains=query) | 
-            Q(description__icontains=query) | 
+            Q(description__icontains=query) |
             Q(area__icontains=query)
         )
 
-    paginator = Paginator(vacancies_list, 10)  # Показывать по 3 вакансии на странице
+    income_level = request.GET.get('income_level')
+    if income_level:
+        min_salary, _ = extract_salary_range(income_level)
+        if min_salary is not None:
+            min_salary = int(min_salary)
+            vacancies_list = vacancies_list.filter(salary__gte=min_salary)
+            vacancies_list = vacancies_list.exclude(Q(salary__icontains='по договоренности') | Q(salary__icontains='Не указано'))
+            
+    paginator = Paginator(vacancies_list, 20) 
     page = request.GET.get('page')
     try:
         vacancies = paginator.page(page)
@@ -43,22 +112,27 @@ def search(request):
     except EmptyPage:
         vacancies = paginator.page(paginator.num_pages)
 
-    # Создаем переменные для первой страницы и всего количества страниц
     first_page_number = 1
     total_pages = paginator.num_pages
-
-    # Определите переменную для номера предыдущей страницы
     previous_page_number = vacancies.previous_page_number() if vacancies.has_previous() else None
-    # Определите переменную для номера следующей страницы
     next_page_number = vacancies.next_page_number() if vacancies.has_next() else None
-
-    # Определите, когда отображать ссылку на первую страницу
     show_first_page_link = vacancies.number > 2
-
-    # Определите, когда отображать ссылку на последнюю страницу
     show_last_page_link = vacancies.number < vacancies.paginator.num_pages - 1
-    
-    return render(request, 'search.html', {'vacancies': vacancies, 'search_query': query, 'first_page_number': first_page_number, 'total_pages': total_pages, 'previous_page_number': previous_page_number, 'next_page_number': next_page_number, 'show_first_page_link': show_first_page_link, 'show_last_page_link': show_last_page_link})
+
+    user = request.user
+    decoded_image = None
+    if user.is_authenticated and hasattr(user, 'avatar'):
+        decoded_image = user.avatar
+
+
+    all_areas = Vacancy.objects.values_list('area', flat=True).distinct()
+    selected_region = request.GET.get('region_value')
+    if selected_region and selected_region != 'all':
+        vacancies_list = vacancies_list.filter(area__exact=selected_region)
+        vacancies_list = vacancies_list.exclude(Q(area__icontains='Москва') | Q(area__icontains='Алматы'))
+
+    return render(request, 'search.html', {'vacancies_list': vacancies_list, 'selected_region': selected_region, 'all_areas': all_areas, 'user': user, 'decoded_image': decoded_image, 'vacancies': vacancies, 'search_query': query, 'selected_region': selected_region, 'first_page_number': first_page_number, 'total_pages': total_pages, 'previous_page_number': previous_page_number, 'next_page_number': next_page_number, 'show_first_page_link': show_first_page_link, 'show_last_page_link': show_last_page_link})
+
 
 @login_required
 def profile(request):
@@ -75,15 +149,22 @@ def profile(request):
 
     if request.method == 'POST':
         if 'profile_submit' in request.POST:
-            profile_form = ProfileUpdateForm(request.POST)
-            if profile_form.is_valid():
-                user.first_name = profile_form.cleaned_data['first_name']
-                user.last_name = profile_form.cleaned_data['last_name']
-                user.username = profile_form.cleaned_data['username']
-                user.email = profile_form.cleaned_data['email']
-                user.phone = profile_form.cleaned_data['phone']
+            if 'avatar' in request.FILES:
+                image_file = request.FILES['avatar']
+                encoded_image = base64.b64encode(image_file.read()).decode('utf-8')
+                user.avatar = encoded_image
                 user.save()
-                return redirect('profile_page')
+                print("Изображение успешно сохранено в базе данных.")
+            else:
+                profile_form = ProfileUpdateForm(request.POST)
+                if profile_form.is_valid():
+                    user.first_name = profile_form.cleaned_data['first_name']
+                    user.last_name = profile_form.cleaned_data['last_name']
+                    user.username = profile_form.cleaned_data['username']
+                    user.email = profile_form.cleaned_data['email']
+                    user.phone = profile_form.cleaned_data['phone']
+                    user.save()
+            return redirect('profile_page')
         elif 'password_submit' in request.POST:
             password_form = PasswordChangeForm(request.POST)
             if password_form.is_valid():
@@ -104,11 +185,24 @@ def profile(request):
                 if user is not None:
                     login(request, user)
                 return redirect('profile_page')
+        elif 'delete_avatar' in request.POST: 
+            # Удаление изображения из базы данных
+            user.avatar = None
+            user.save()
+            return redirect('profile_page')
 
-    context = {'user': user, 'authenticated': True, 'profile_form': profile_form, 'password_form': password_form}
+    decoded_image = None
+    if user.avatar:
+        try:
+            decoded_image = user.avatar
+        except:
+            print("Ошибка при декодировании изображения")
+
+
+    context = {'user': user, 'authenticated': True, 'profile_form': profile_form, 'password_form': password_form, 'decoded_image': decoded_image}
     return render(request, 'profile.html', context)
 
-from django.contrib.auth.hashers import check_password
+
 
 
 def auth(request):

@@ -4,8 +4,7 @@ from django.db import models
 class CustomUser(AbstractUser):
     phone = models.CharField(max_length=15, blank=True)
     subscription_status = models.IntegerField(default=0)
-
-    is_admin = models.BooleanField(default=False)
+    avatar = models.TextField(blank=True, null=True) 
 
     groups = models.ManyToManyField(
         'auth.Group',
