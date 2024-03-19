@@ -8,7 +8,7 @@ class Command(BaseCommand):
     help = 'Запуск парсеров'
     
     def handle(self, *args, **options):
-        parsers = [TrudvsemParser()]
+        parsers = [HHParser(),RabotaParser(), TrudvsemParser()]
 
         # Запускаем парсеры
         for parser in parsers:
