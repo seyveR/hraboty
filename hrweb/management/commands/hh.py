@@ -54,11 +54,12 @@ class HHParser:
                 area = vac['area']['name']
                 description = self.deEmojify(re.sub(r'\<[^>]*\>', '', str(f"Требования: {vac['snippet']['requirement']} Обязанности: {vac['snippet']['responsibility']}")))
                 date = (vac['published_at']).split('T')[0]
-                self.save_vacancy_info(name, employer, url, salary, description, area, date)
+                schedule = vac['schedule']['name']
+                self.save_vacancy_info(name, employer, url, salary, description, area, date, schedule)
         except Exception:
             pass
 
-    def save_vacancy_info(self, name, employer, url, salary, description, area, date):
+    def save_vacancy_info(self, name, employer, url, salary, description, area, date, schedule):
         # Проверяем наличие записи с таким же URL в базе данных
         if Vacancy.objects.filter(url=url).exists():
             print(f"{url} already exists. Skipping...")
@@ -72,7 +73,8 @@ class HHParser:
                 salary=salary,
                 description=description,
                 area=area,
-                date=date
+                date=date,
+                schedule=schedule
             )
             print(f"{name} saved successfully.")
         except IntegrityError:

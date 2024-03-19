@@ -33,6 +33,7 @@ class Vacancy(models.Model):
     description = models.TextField(verbose_name ='Описание')
     area = models.CharField(max_length=255, verbose_name ='Зона')
     date = models.DateField(verbose_name ='Дата')
+    schedule = models.CharField(max_length=100, verbose_name ='График работы', default = 'Не указано')
     
     class Meta:
         verbose_name = 'Вакансия'

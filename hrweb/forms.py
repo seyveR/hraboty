@@ -10,7 +10,6 @@ class UserRegistrationForm(forms.ModelForm):
         
 class VacancyForm(forms.ModelForm):
     
-    
     class Meta:
         model = Vacancy
         fields = {
@@ -20,7 +19,8 @@ class VacancyForm(forms.ModelForm):
             'salary',
             'description',
             'area',
-            'date'
+            'date',
+            'schedule'
         }
 
 
