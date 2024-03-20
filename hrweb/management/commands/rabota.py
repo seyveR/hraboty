@@ -36,6 +36,24 @@ class RabotaParser:
                 vacancy_url = "https://www.rabota.ru" + block.find('div', {'class': 'vacancy-preview-card__salary'}).find('a')['href']
                 description = block.find('div', {'class': 'vacancy-preview-card__short-description'}).text
                 self.save_vacancy_info(vacancy_url, description)
+    
+    def process_salary(self, value):
+        # Разделяем значение по разделителю "—"
+        values = value.split("—")
+
+        # Проверяем количество значений
+        if len(values) == 2:
+            # Если есть два значения, убираем лишние пробелы
+            salary_min = values[0].strip()
+            salary_max = values[1].strip()
+        else:
+            # Если есть только одно значение, убираем лишние пробелы,
+            # а второе значение устанавливаем как "Не указано"
+            salary_min = values[0].strip()
+            salary_max = "Не указано"
+
+        # Возвращаем результат в виде кортежа
+        return salary_min.capitalize().replace('От ', ''), salary_max.capitalize()
 
     def save_vacancy_info(self, vacancy_url, description):
         page_content = requests.get(url=vacancy_url).text
@@ -52,28 +70,46 @@ class RabotaParser:
             salary =soup.find('div', {'class': 'branding-vacancy-card-header__salary'}).find('h3').text.strip().replace(" руб.",'').replace('\xa0','').replace('—',' —')
         except Exception: 
             salary =soup.find('h3', {'class': 'vacancy-card__salary'}).text.strip().replace(" руб.",'').replace('\xa0','').replace('—',' —')
-        date =soup.find('span', {'class': 'vacancy-system-info__updated-date'}).meta.get('content').split('T')[0]
+            
+        salary_min, salary_max = self.process_salary(salary)
+        
+        try: 
+            date =soup.find('span', {'class': 'vacancy-system-info__updated-date'}).meta.get('content').split('T')[0]
+        except Exception: 
+            print(vacancy_url)        
+        
         area =self.parse_city_name(soup.find('title').text.strip().replace(f'Вакансия {title} в ','').split()[0]).capitalize()
-
+        
+        try: 
+            schedule =soup.find('span', {'class': 'vacancy-requirements_uppercase'}).text.split(',')[0].strip().capitalize()
+        except Exception: 
+            schedule = "Не указано"
+        
+        
         # Извлекаем часть URL до параметра запроса, чтобы исключить его из проверки на уникальность
         vacancy_url_base = vacancy_url.split('?')[0]
 
         # Проверяем наличие записи с таким же базовым URL в базе данных
         if Vacancy.objects.filter(url__startswith=vacancy_url_base).exists():
-            print(f"{vacancy_url_base} already exists. Skipping...")
+            print(f"Rabota: {vacancy_url_base} already exists. Skipping...")
             return
 
         try:
-            vacancy = Vacancy.objects.create(
-                name=title,
-                employer=employer,
-                url=vacancy_url,
-                salary=salary,
-                description=description,
-                area=area,
-                date=date
-            )
-            print(f"{title} saved successfully.")
+            try:
+                vacancy = Vacancy.objects.create(
+                    name=title,
+                    employer=employer,
+                    url=vacancy_url,
+                    salary_min=salary_min,
+                    salary_max=salary_max,
+                    description=description,
+                    area=area,
+                    schedule=schedule,
+                    date=date
+                )
+                print(f"Rabota: {title} saved successfully.")
+            except Exception:
+                print(vacancy_url + ' ERROR')
+                pass
         except IntegrityError:
-            # Если возникает ошибка IntegrityError, значит запись была создана в другом потоке/процессе
-            print(f"Failed to save vacancy {title}: IntegrityError.")
+            print(f"Rabota: Failed to save vacancy {title}: IntegrityError.")
