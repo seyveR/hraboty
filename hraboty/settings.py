@@ -106,9 +106,10 @@ AUTH_USER_MODEL = 'hrweb.CustomUser'
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = 'ru-ru'
+# LANGUAGE_CODE = 'ru-ru'
 
-TIME_ZONE = 'UTC'
+LANGUAGE_CODE = 'ru-RU'
+TIME_ZONE = 'Europe/Moscow'
 
 USE_I18N = True
 

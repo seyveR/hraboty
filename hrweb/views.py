@@ -14,47 +14,11 @@ from django.core.files.base import ContentFile
 import base64
 from django.contrib.auth.hashers import check_password
 import re
+import datetime
+from datetime import date, timedelta
+from dateutil.relativedelta import relativedelta
+from babel.dates import format_date
 
-def extract_salary_range(salary_str):
-    # Проверяем специальные случаи
-    if salary_str.lower() in ['по договоренности', 'не указано']:
-        print("Special case:", salary_str)
-        return None, None  # Возвращаем None для этих случаев
-    
-    # Проверяем формат зарплаты в виде "от X до Y"
-    matches_range = re.match(r'от\s*(\d+)\s*до\s*(\d+)', salary_str, re.IGNORECASE)
-    if matches_range:
-        min_salary = int(matches_range.group(1))
-        max_salary = int(matches_range.group(2))
-        print("Min salary:", min_salary)
-        print("Max salary:", max_salary)
-        return min_salary, max_salary
-    
-    # Проверяем формат зарплаты в виде диапазона "X - Y"
-    matches_hyphen = re.match(r'(\d+)\s*-\s*(\d+)', salary_str)
-    if matches_hyphen:
-        min_salary = int(matches_hyphen.group(1))
-        max_salary = int(matches_hyphen.group(2))
-        print("Min salary:", min_salary)
-        print("Max salary:", max_salary)
-        return min_salary, max_salary
-    
-    # Проверяем формат зарплаты в виде "от X"
-    matches_from = re.match(r'от\s*(\d+)', salary_str, re.IGNORECASE)
-    if matches_from:
-        min_salary = int(matches_from.group(1))
-        print("Min salary:", min_salary)
-        return min_salary, None
-    
-    # Проверяем формат зарплаты в виде просто числа
-    matches_single = re.match(r'(\d+)', salary_str)
-    if matches_single:
-        min_salary = int(matches_single.group(1))
-        print("Single salary:", min_salary)
-        return min_salary, None
-    
-    # Если не найдено числовых значений, возвращаем None
-    return None, None
 
 def home(request): 
     user = request.user
@@ -87,34 +51,70 @@ def price(request):
 def search(request):
     query = request.GET.get('search')
     vacancies_list = Vacancy.objects.all()
+
+    # Текстовый запрос
     if query and query.strip(): 
         vacancies_list = vacancies_list.filter(
             Q(name__icontains=query) | 
             Q(description__icontains=query) |
             Q(area__icontains=query)
         )
-    income_level = request.GET.get('income_level')
-    if income_level:
-        min_salary, _ = extract_salary_range(income_level)
-        if min_salary is not None:
-            min_salary = int(min_salary)
-            vacancies_list = vacancies_list.filter(salary__gte=min_salary)
-            vacancies_list = vacancies_list.exclude(Q(salary__icontains='по договоренности') | Q(salary__icontains='Не указано'))
-            for vac in vacancies_list:
-                print(vac.salary)
 
+    # Фильтр по зп
+    income_level = request.GET.get('income_level')
+    min_salary = income_level
+
+    if income_level:
+        if income_level == '0':
+            pass
+        else:
+            vacancies_list = vacancies_list.filter(salary_min__gte=min_salary)
+
+
+    # Фильтр по графику 
     schedule = request.GET.getlist("schedule[]")
     print(schedule)
     if schedule:
-        for selected_sched in schedule:
-            vacancies_list = vacancies_list.filter(schedule__in=schedule)
+        vacancies_list = vacancies_list.filter(schedule__in=schedule)
 
+    # Фильтр по региону
     all_areas = Vacancy.objects.values_list('area', flat=True).distinct()
     selected_region = request.GET.getlist("area[]")
     if selected_region:
         vacancies_list = vacancies_list.filter(area__in=selected_region)
 
-    paginator = Paginator(vacancies_list, 20) 
+    # Фильтрация по дате
+    check_date = request.GET.getlist("check_date[]")
+    today = date.today()
+    yesterday = today - timedelta(days=1)
+    start_of_week = today - timedelta(days=today.weekday())
+    start_of_month = today.replace(day=1)
+    start_of_3_months_ago = today - relativedelta(months=3)
+
+    if 'today' in check_date:
+        vacancies_list = vacancies_list.filter(date=today)
+    elif 'yesterday' in check_date:
+        vacancies_list = vacancies_list.filter(date=yesterday)
+    elif 'this_week' in check_date:
+        vacancies_list = vacancies_list.filter(date__range=[start_of_week, today])
+    elif 'this_month' in check_date:
+        vacancies_list = vacancies_list.filter(date__range=[start_of_month, today])
+    elif 'last_3_months' in check_date:
+        vacancies_list = vacancies_list.filter(date__gte=start_of_3_months_ago)
+
+    # Вывод даты для юзера
+    
+    for vacancy in vacancies_list:
+        if vacancy.date == today:
+            vacancy.date_display = "Сегодня"
+        elif vacancy.date == yesterday:
+            vacancy.date_display = "Вчера"
+        else:
+            vacancy.date_display = format_date(vacancy.date, format='d MMMM', locale='ru_RU')
+
+
+    # Пагинация 
+    paginator = Paginator(vacancies_list, 100) 
     page = request.GET.get('page')
     try:
         vacancies = paginator.page(page)
@@ -132,6 +132,8 @@ def search(request):
     show_first_page_link = vacancies.number > 2
     show_last_page_link = vacancies.number < vacancies.paginator.num_pages - 1
     
+
+    # Аутентификация юзера для отображения аватара
     user = request.user
     decoded_image = None
     if user.is_authenticated and hasattr(user, 'avatar'):

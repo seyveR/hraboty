@@ -111,6 +111,56 @@
             <div class="filters-vacancy">
                 <div class="filters-group-name">
                     <span class="group-name">
+                        <legend>Дата</legend>
+                    </span>
+                </div>
+                <div class="filters-group-items">
+                    <ul class="group-items-ul">
+                        <li class="item-li">
+                            <label class="item-checkbox-label">
+                                <input name="check_date[]" class="item-checkbox-element" type="checkbox" value="today">
+                                <span class="item-checkbox-text">
+                                    <span>Сегодня</span>&nbsp;
+                                </span>
+                            </label>
+                        </li>
+                        <li class="item-li">
+                            <label class="item-checkbox-label">
+                                <input name="check_date[]" class="item-checkbox-element" type="checkbox" value="yesterday">
+                                <span class="item-checkbox-text">
+                                    <span>Вчера</span>&nbsp;
+                                </span>
+                            </label>
+                        </li>
+                        <li class="item-li">
+                            <label class="item-checkbox-label">
+                                <input name="check_date[]" class="item-checkbox-element" type="checkbox" value="this_week">
+                                <span class="item-checkbox-text">
+                                    <span>На этой неделе</span>&nbsp;
+                                </span>
+                            </label>
+                        </li>
+                        <li class="item-li">
+                            <label class="item-checkbox-label">
+                                <input name="check_date[]" class="item-checkbox-element" type="checkbox" value="this_month">
+                                <span class="item-checkbox-text">
+                                    <span>В этом месяце</span>&nbsp;
+                                </span>
+                            </label>
+                        </li>
+                        <li class="item-li">
+                            <label class="item-checkbox-label">
+                                <input name="check_date[]" class="item-checkbox-element" type="checkbox" value="last_3_months">
+                                <span class="item-checkbox-text">
+                                    <span>Последние 3 месяца</span>&nbsp;
+                                </span>
+                            </label>
+                        </li>
+                    </ul>
+                </div>    
+
+                <div class="filters-group-name">
+                    <span class="group-name">
                         <legend>График работы</legend>
                     </span>
                 </div>
@@ -158,34 +208,6 @@
                         </li>
                     </ul>
                 </div>
-                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-                <script>
-                    function handleShedChange() {
-                        var selectedShed = $('input[name="check_sched"]:checked').val();
-                        console.log("Selected shed level:", selectedShed);
-                        var searchQuery = $('input[name="search"]').val(); 
-                        var currentPage = $('.pagination').find('.current').text(); // Получаем текущий номер страницы
-                        $.ajax({
-                            url: window.location.href,
-                            type: 'GET',
-                            data: {
-                                search: searchQuery,
-                                'schedule[]': $('input[name="check_sched"]:checked').map(function(){
-                                    return $(this).val();
-                                }).get(),
-                                page: currentPage // Передаем текущий номер страницы в запрос
-                            },
-                            success: function(data) {
-                                $('.vacancies').html($(data).find('.vacancies').html());
-                                $('.pagination').html($(data).find('.pagination').html());
-                            }
-                        });
-                    }
-                
-                    $(document).ready(function() {
-                        $('input[name="check_sched"]').change(handleShedChange);
-                    });
-                </script>
 
                 <div class="filters-group-name">
                     <span class="group-name">
@@ -196,7 +218,7 @@
                     <ul class="group-items-ul">
                         <li class="item-li">
                             <label class="item-radio-label">
-                                <input name="income_level" class="item-radio-element" type="radio">
+                                <input name="income_level" class="item-radio-element" type="radio" value="0">
                                 <span class="item-radio-text">
                                     <span>Не имеет значения</span>&nbsp;
                                 </span>
@@ -251,10 +273,10 @@
                         <legend>Регион</legend>
                     </span>
                 </div>
-                <div class="filters-group-items" style="display: inline-block;">
+                <div class="filters-group-items-region" style="display: inline-block;">
                     <ul class="group-items-ul">
                         {% for area in all_areas %}
-                        <li class="item-li{% if forloop.counter > 5 %} hidden{% endif %}">
+                        <li class="item-li-region{% if forloop.counter > 5 %} hidden{% endif %}">
                             <label class="item-checkbox-label">
                                 <input name="region" class="item-checkbox-element" type="checkbox" value="{{ area }}">
                                 <span class="item-checkbox-text">
@@ -266,134 +288,126 @@
                     </ul>
                     {% if all_areas|length > 5 %}
                     <div class="show-all-link">
-                        <a href="#" id="toggleRegions">Показать все</a>
+                        <a href="#" id="toggleRegionsLink">Показать все</a>
                     </div>
                     {% endif %}
                 </div>
-                <div id="regionSlider" style="display: none; background-color: #CCCCCC; width: 10px; height: 100px; margin-left: 10px; float: right;"></div>
+                <div id="slider-container" style="display: none; overflow-y: auto; max-height: 150px;">
+                    <ul id="city-list" class="city-list">
+                        {% for area in all_areas %}
+                        <li class="item-li">
+                            <label class="item-checkbox-label">
+                                <input name="region" class="item-checkbox-element" type="checkbox" value="{{ area }}">
+                                <span class="item-checkbox-text">
+                                    <span>{{ area }}</span>&nbsp;
+                                </span>
+                            </label>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="hide-all-link">
+                    <a href="#" id="hideSlider" style="display: none;">Скрыть</a>
+                </div>
+                <!-- <button id="hideSlider" style="display: none;">Скрыть</button> -->
                 
-                <script>
-                    function handleRegionChange() {
-                        var selectedShed = $('input[name="region"]:checked').val();
-                        console.log("Selected Region level:", selectedShed);
-                        var searchQuery = $('input[name="search"]').val(); 
-                        $.ajax({
-                            url: window.location.href,
-                            type: 'GET',
-                            data: {
-                                search: searchQuery,
-                                'area[]': $('input[name="region"]:checked').map(function(){
-                                    return $(this).val();
-                                }).get()
-                            },
-                            success: function(data) {
-                                $('.vacancies').html($(data).find('.vacancies').html());
-                            }
-                        });
-                    }
-                
-                    $(document).ready(function() {
-                        $('input[name="region"]').change(handleRegionChange);
-                    });
-                </script>
-                <script>
-                    document.addEventListener("DOMContentLoaded", function() {
-                        var slider = document.getElementById("regionSlider");
-                        var sliderHandle = document.createElement("div");
-                        sliderHandle.className = "ui-slider-handle";
-                        slider.appendChild(sliderHandle);
-                
-                        var handleRegionChange = function() {
-                            var selectedShed = document.querySelector('input[name="region"]:checked').value;
-                            console.log("Selected Region level:", selectedShed);
-                            var searchQuery = document.querySelector('input[name="search"]').value;
-                            // Реализуйте ваш AJAX запрос здесь
-                        };
-                
-                        var updateSlider = function(visibleItems) {
-                            var itemLis = document.querySelectorAll('.item-li');
-                            for (var i = 0; i < itemLis.length; i++) {
-                                if (i < visibleItems) {
-                                    itemLis[i].classList.remove('hidden');
-                                } else {
-                                    itemLis[i].classList.add('hidden');
-                                }
-                            }
-                        };
-                
-                        var sliderChange = function(event, ui) {
-                            var visibleItems = ui.value;
-                            updateSlider(visibleItems);
-                        };
-                
-                        var initSlider = function() {
-                            var sliderOptions = {
-                                orientation: "vertical",
-                                range: "min",
-                                value: 5,
-                                min: 1,
-                                max: 5, // Значение по умолчанию для показа только первых 5 городов
-                                slide: sliderChange
-                            };
-                            $(slider).slider(sliderOptions);
-                            $(slider).slider("pips", {
-                                rest: "label",
-                                step: 1
-                            });
-                        };
-                
-                        var showAll = function() {
-                            var buttonText = this.textContent;
-                            this.textContent = (buttonText == 'Показать все' ? 'Скрыть' : 'Показать все');
-                            $('#regionSlider').toggle();
-                            if (buttonText == 'Показать все') {
-                                var maxCities = document.querySelectorAll('li.item-li').length;
-                                $(slider).slider("option", "max", maxCities).slider("value", maxCities);
-                                updateSlider(maxCities);
-                            } else {
-                                $(slider).slider("option", "max", 5).slider("value", 5);
-                                updateSlider(5);
-                            }
-                        };
-                
-                        document.querySelectorAll('input[name="region"]').forEach(function(input) {
-                            input.addEventListener("change", handleRegionChange);
-                        });
-                
-                        document.getElementById('toggleRegions').addEventListener("click", showAll);
-                
-                        initSlider();
-                    });
-                </script>
-
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
                 <script>
-                    // Функция для отправки AJAX запроса на сервер при изменении состояния радио кнопок уровня дохода
-                    function handleIncomeLevelChange() {
+                    $(document).ready(function() {
+                        var selectedCity = ''; // Переменная для хранения выбранного города
+                
+                        $(document).on("click", "#toggleRegionsLink", function(event) {
+                            event.preventDefault();
+                            $(".filters-group-items-region").hide();
+                            $("#slider-container").show();
+                            $("#hideSlider").show();
+                            $(this).text("Скрыть");
+                            $(this).attr("id", "hideSliderLink");
+                
+                            // Сортировка городов по алфавиту
+                            var cityList = $("#city-list");
+                            var items = cityList.children().get();
+                            items.sort(function(a, b) {
+                                var textA = $(a).text().toUpperCase();
+                                var textB = $(b).text().toUpperCase();
+                                return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+                            });
+                            $.each(items, function(index, item) {
+                                cityList.append(item);
+                            });
+                        });
+                
+                        $(document).on("click", "#hideSlider", function(event) {
+                            event.preventDefault();
+                            selectedCity = $("#city-list input:checked").val(); // Получаем выбранный город из слайдера
+                            console.log("Выбранный город:", selectedCity); // Выводим выбранный город в консоль
+                            if (selectedCity) {
+                                
+                            }
+                            $("#slider-container").hide();
+                            $(".filters-group-items-region").show();
+                            $(this).hide();
+                            $("#hideSliderLink").text("Показать все");
+                            $("#hideSliderLink").attr("id", "toggleRegionsLink");
+                        });
+                
+                        // Если пользователь выбирает город в слайдере, то он будет автоматически заменять первый город в списке при его закрытии
+                        $(document).on("change", "#city-list input", function() {
+                            selectedCity = $(this).val();
+                        });
+                    });
+                </script>
+                
+
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+                <script>
+                    function handleFiltersChange() {
+                        var searchQuery = $('input[name="search"]').val(); 
+                        var currentPage = $('.pagination').find('.current').text(); // Получаем текущий номер страницы
+
+                        // Получаем значения всех выбранных фильтров
                         var selectedIncomeLevel = $('input[name="income_level"]:checked').val();
-                        console.log("Selected income level:", selectedIncomeLevel);
-                        var searchQuery = $('input[name="search"]').val(); // Получаем текущее значение поискового запроса
+                        var selectedSchedule = $('input[name="check_sched"]:checked').map(function() {
+                            return $(this).val();
+                        }).get();
+                    
+                        var selectedRegions = $('input[name="region"]:checked').map(function() {
+                            return $(this).val();
+                        }).get();
+                        var selectedDates = $('input[name="check_date[]"]:checked').map(function() {
+                            return $(this).val();
+                        }).get();
+                    
                         // Отправляем AJAX запрос на сервер
                         $.ajax({
                             url: window.location.href,
                             type: 'GET',
                             data: {
                                 search: searchQuery,
-                                income_level: selectedIncomeLevel
+                                income_level: selectedIncomeLevel,
+                                'schedule[]': selectedSchedule,
+                                'area[]': selectedRegions,
+                                'check_date[]': selectedDates,
+                                page: currentPage 
                             },
                             success: function(data) {
-                                console.log("Received Income data:", data); 
-                                // Обновляем только список вакансий без перезагрузки страницы
                                 $('.vacancies').html($(data).find('.vacancies').html());
+                                $('.pagination').html($(data).find('.pagination').html());
                             }
                         });
                     }
-                
-                    // Добавляем обработчик события на изменение состояния радио кнопок уровня дохода
+
                     $(document).ready(function() {
-                        $('input[name="income_level"]').change(handleIncomeLevelChange);
+                        // Добавляем обработчики событий на изменение состояния фильтров
+                        $('input[name="income_level"]').change(handleFiltersChange);
+                        $('input[name="check_sched"]').change(handleFiltersChange);
+                        $('input[name="region"]').change(handleFiltersChange);
+                        $('input[name="check_date[]"]').change(handleFiltersChange);
                     });
+
                 </script>
+
             </div>
         </div>
 
@@ -402,11 +416,26 @@
                 {% for vacancy in vacancies %}
                 <div class="vacancy-box">
                     <div class="name_vac">{{vacancy.name}}</div> 
-                    <div class="info_vac_salary"><strong>{{ vacancy.salary }} ₽</strong></div> 
+                    {% if vacancy.salary_min is not none and vacancy.salary_max is not none %}
+                    <div class="info_vac_salary"><strong>{{ vacancy.salary_min }} – {{ vacancy.salary_max }} ₽</strong></div> 
+                    {% elif vacancy.salary_min is not none %}
+                    <div class="info_vac_salary"><strong>{{ vacancy.salary_min }} ₽</strong></div>
+                    {% elif vacancy.salary_max is not none %}
+                    <div class="info_vac_salary"><strong>{{ vacancy.salary_max }} ₽</strong></div>
+                    {% else %}
+                    <div class="info_vac_salary"><strong>Не указано</strong></div>
+                    {% endif %}
+
                     <div class="info_vac_empl">{{ vacancy.employer }}</div> 
                     <div class="info_vac_area">{{ vacancy.area }}</div>
-                    <button class="btn-more-info">Подробнее</button>
-                    <button class="btn-call">Откликнуться</button>
+                    <div class="info_vac_details">
+                        <div class="info_vac_schedule">{{ vacancy.schedule }}</div>
+                        <div class="info_vac_date">{{ vacancy.date_display }}</div>
+                    </div>
+                    <div class="info_vac_buttons">
+                        <button class="btn-more-info">Подробнее</button>
+                        <button class="btn-call">Откликнуться</button>
+                    </div>
                 </div>
                 {% empty %}
                 <p>Нет результатов для "{{ query }}".</p>
