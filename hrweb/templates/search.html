@@ -163,8 +163,8 @@
                     function handleShedChange() {
                         var selectedShed = $('input[name="check_sched"]:checked').val();
                         console.log("Selected shed level:", selectedShed);
-                        var searchQuery = $('input[name="search"]').val(); // Получаем текущее значение поискового запроса
-                        // Отправляем AJAX запрос на сервер
+                        var searchQuery = $('input[name="search"]').val(); 
+                        var currentPage = $('.pagination').find('.current').text(); // Получаем текущий номер страницы
                         $.ajax({
                             url: window.location.href,
                             type: 'GET',
@@ -172,17 +172,16 @@
                                 search: searchQuery,
                                 'schedule[]': $('input[name="check_sched"]:checked').map(function(){
                                     return $(this).val();
-                                }).get()
+                                }).get(),
+                                page: currentPage // Передаем текущий номер страницы в запрос
                             },
                             success: function(data) {
-                                console.log("Received Income data:", data); 
-                                // Обновляем только список вакансий без перезагрузки страницы
                                 $('.vacancies').html($(data).find('.vacancies').html());
+                                $('.pagination').html($(data).find('.pagination').html());
                             }
                         });
                     }
                 
-                    // Добавляем обработчик события на изменение состояния радио кнопок уровня дохода
                     $(document).ready(function() {
                         $('input[name="check_sched"]').change(handleShedChange);
                     });
@@ -252,32 +251,121 @@
                         <legend>Регион</legend>
                     </span>
                 </div>
-                
-                <div class="filters-group-items">
+                <div class="filters-group-items" style="display: inline-block;">
                     <ul class="group-items-ul">
-                        <label class="label_reg" for="region">Выберите регион:</label>
-                        <select name="region_value" id="region_value">
-                            <option value="all">Все регионы</option>
-                            {% for area in all_areas %}
-                                <option value="{{ area }}" {% if selected_region == area %}selected{% endif %}>{{ area }}</option>
-                            {% endfor %}
-                        </select>
-                    </ul>               
+                        {% for area in all_areas %}
+                        <li class="item-li{% if forloop.counter > 5 %} hidden{% endif %}">
+                            <label class="item-checkbox-label">
+                                <input name="region" class="item-checkbox-element" type="checkbox" value="{{ area }}">
+                                <span class="item-checkbox-text">
+                                    <span>{{ area }}</span>&nbsp;
+                                </span>
+                            </label>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% if all_areas|length > 5 %}
+                    <div class="show-all-link">
+                        <a href="#" id="toggleRegions">Показать все</a>
+                    </div>
+                    {% endif %}
                 </div>
+                <div id="regionSlider" style="display: none; background-color: #CCCCCC; width: 10px; height: 100px; margin-left: 10px; float: right;"></div>
                 
                 <script>
-                    document.addEventListener("DOMContentLoaded", function() {
-                        var selectedRegion = "{{ selected_region }}";
-                        if (selectedRegion !== "") {
-                            document.getElementById("region_value").value = selectedRegion;
-                        }
-                    });
+                    function handleRegionChange() {
+                        var selectedShed = $('input[name="region"]:checked').val();
+                        console.log("Selected Region level:", selectedShed);
+                        var searchQuery = $('input[name="search"]').val(); 
+                        $.ajax({
+                            url: window.location.href,
+                            type: 'GET',
+                            data: {
+                                search: searchQuery,
+                                'area[]': $('input[name="region"]:checked').map(function(){
+                                    return $(this).val();
+                                }).get()
+                            },
+                            success: function(data) {
+                                $('.vacancies').html($(data).find('.vacancies').html());
+                            }
+                        });
+                    }
                 
-                    document.getElementById("region_value").addEventListener("change", function() {
-                        var selectedRegion = this.value;
-                        window.location.href = "/search?search=" + encodeURIComponent(selectedRegion);
+                    $(document).ready(function() {
+                        $('input[name="region"]').change(handleRegionChange);
                     });
                 </script>
+                <script>
+                    document.addEventListener("DOMContentLoaded", function() {
+                        var slider = document.getElementById("regionSlider");
+                        var sliderHandle = document.createElement("div");
+                        sliderHandle.className = "ui-slider-handle";
+                        slider.appendChild(sliderHandle);
+                
+                        var handleRegionChange = function() {
+                            var selectedShed = document.querySelector('input[name="region"]:checked').value;
+                            console.log("Selected Region level:", selectedShed);
+                            var searchQuery = document.querySelector('input[name="search"]').value;
+                            // Реализуйте ваш AJAX запрос здесь
+                        };
+                
+                        var updateSlider = function(visibleItems) {
+                            var itemLis = document.querySelectorAll('.item-li');
+                            for (var i = 0; i < itemLis.length; i++) {
+                                if (i < visibleItems) {
+                                    itemLis[i].classList.remove('hidden');
+                                } else {
+                                    itemLis[i].classList.add('hidden');
+                                }
+                            }
+                        };
+                
+                        var sliderChange = function(event, ui) {
+                            var visibleItems = ui.value;
+                            updateSlider(visibleItems);
+                        };
+                
+                        var initSlider = function() {
+                            var sliderOptions = {
+                                orientation: "vertical",
+                                range: "min",
+                                value: 5,
+                                min: 1,
+                                max: 5, // Значение по умолчанию для показа только первых 5 городов
+                                slide: sliderChange
+                            };
+                            $(slider).slider(sliderOptions);
+                            $(slider).slider("pips", {
+                                rest: "label",
+                                step: 1
+                            });
+                        };
+                
+                        var showAll = function() {
+                            var buttonText = this.textContent;
+                            this.textContent = (buttonText == 'Показать все' ? 'Скрыть' : 'Показать все');
+                            $('#regionSlider').toggle();
+                            if (buttonText == 'Показать все') {
+                                var maxCities = document.querySelectorAll('li.item-li').length;
+                                $(slider).slider("option", "max", maxCities).slider("value", maxCities);
+                                updateSlider(maxCities);
+                            } else {
+                                $(slider).slider("option", "max", 5).slider("value", 5);
+                                updateSlider(5);
+                            }
+                        };
+                
+                        document.querySelectorAll('input[name="region"]').forEach(function(input) {
+                            input.addEventListener("change", handleRegionChange);
+                        });
+                
+                        document.getElementById('toggleRegions').addEventListener("click", showAll);
+                
+                        initSlider();
+                    });
+                </script>
+
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
                 <script>
                     // Функция для отправки AJAX запроса на сервер при изменении состояния радио кнопок уровня дохода

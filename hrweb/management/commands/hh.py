@@ -9,7 +9,7 @@ from django.db import IntegrityError
 
 class HHParser:
     def __init__(self):
-        self.base_url = "https://api.hh.ru/vacancies"
+        self.base_url = "https://api.hh.ru/vacancies?per_page=100"
         
     def deEmojify(self, text):
         emoji_pattern = re.compile("["

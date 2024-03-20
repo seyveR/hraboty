@@ -85,72 +85,59 @@ def price(request):
     return render(request, 'price.html', context)
 
 def search(request):
-    if request.method == 'POST' and request.is_ajax():
-        selected_schedules = request.POST.getlist('selected_schedules[]')
-        vacancies_list = Vacancy.objects.exclude(schedule='Не указано')
-        if selected_schedules:
-            vacancies_list = vacancies_list.filter(schedule__in=selected_schedules)
-        
-        # Возвращает JSON-ответ с отфильтрованными вакансиями
-        data = {'vacancies': list(vacancies_list.values())}
-        return JsonResponse(data)
+    query = request.GET.get('search')
+    vacancies_list = Vacancy.objects.all()
+    if query and query.strip(): 
+        vacancies_list = vacancies_list.filter(
+            Q(name__icontains=query) | 
+            Q(description__icontains=query) |
+            Q(area__icontains=query)
+        )
+    income_level = request.GET.get('income_level')
+    if income_level:
+        min_salary, _ = extract_salary_range(income_level)
+        if min_salary is not None:
+            min_salary = int(min_salary)
+            vacancies_list = vacancies_list.filter(salary__gte=min_salary)
+            vacancies_list = vacancies_list.exclude(Q(salary__icontains='по договоренности') | Q(salary__icontains='Не указано'))
+            for vac in vacancies_list:
+                print(vac.salary)
 
-    else:
-        query = request.GET.get('search')
-        vacancies_list = Vacancy.objects.all()
+    schedule = request.GET.getlist("schedule[]")
+    print(schedule)
+    if schedule:
+        for selected_sched in schedule:
+            vacancies_list = vacancies_list.filter(schedule__in=schedule)
 
-        if query and query.strip(): 
-            vacancies_list = vacancies_list.filter(
-                Q(name__icontains=query) | 
-                Q(description__icontains=query) |
-                Q(area__icontains=query)
-            )
+    all_areas = Vacancy.objects.values_list('area', flat=True).distinct()
+    selected_region = request.GET.getlist("area[]")
+    if selected_region:
+        vacancies_list = vacancies_list.filter(area__in=selected_region)
 
-        income_level = request.GET.get('income_level')
-        if income_level:
-            min_salary, _ = extract_salary_range(income_level)
-            if min_salary is not None:
-                min_salary = int(min_salary)
-                vacancies_list = vacancies_list.filter(salary__gte=min_salary)
-                vacancies_list = vacancies_list.exclude(Q(salary__icontains='по договоренности') | Q(salary__icontains='Не указано'))
+    paginator = Paginator(vacancies_list, 20) 
+    page = request.GET.get('page')
+    try:
+        vacancies = paginator.page(page)
+    except PageNotAnInteger:
+        page = 1
+        vacancies = paginator.page(page)
+    except EmptyPage:
+        page = paginator.num_pages
+        vacancies = paginator.page(page)
 
-        schedule = request.GET.getlist("schedule[]")
-        print(schedule)
-        if schedule:
-            for selected_sched in schedule:
-                vacancies_list = vacancies_list.filter(schedule__in=schedule)
+    first_page_number = 1
+    total_pages = paginator.num_pages
+    previous_page_number = vacancies.previous_page_number() if vacancies.has_previous() else None
+    next_page_number = vacancies.next_page_number() if vacancies.has_next() else None
+    show_first_page_link = vacancies.number > 2
+    show_last_page_link = vacancies.number < vacancies.paginator.num_pages - 1
+    
+    user = request.user
+    decoded_image = None
+    if user.is_authenticated and hasattr(user, 'avatar'):
+        decoded_image = user.avatar
 
-        paginator = Paginator(vacancies_list, 20) 
-        page = request.GET.get('page')
-        try:
-            vacancies = paginator.page(page)
-        except PageNotAnInteger:
-            vacancies = paginator.page(1)
-        except EmptyPage:
-            vacancies = paginator.page(paginator.num_pages)
-
-        first_page_number = 1
-        total_pages = paginator.num_pages
-        previous_page_number = vacancies.previous_page_number() if vacancies.has_previous() else None
-        next_page_number = vacancies.next_page_number() if vacancies.has_next() else None
-        show_first_page_link = vacancies.number > 2
-        show_last_page_link = vacancies.number < vacancies.paginator.num_pages - 1
-
-        user = request.user
-        decoded_image = None
-        if user.is_authenticated and hasattr(user, 'avatar'):
-            decoded_image = user.avatar
-
-
-        all_areas = Vacancy.objects.values_list('area', flat=True).distinct()
-        selected_region = request.GET.get('region_value')
-        if selected_region and selected_region != 'all':
-            vacancies_list = vacancies_list.filter(area__exact=selected_region)
-            vacancies_list = vacancies_list.exclude(Q(area__icontains='Москва') | Q(area__icontains='Алматы'))
-
-        
-
-    return render(request, 'search.html', {'vacancies_list': vacancies_list, 'selected_region': selected_region, 'all_areas': all_areas, 'user': user, 'decoded_image': decoded_image, 'vacancies': vacancies, 'search_query': query, 'selected_region': selected_region, 'first_page_number': first_page_number, 'total_pages': total_pages, 'previous_page_number': previous_page_number, 'next_page_number': next_page_number, 'show_first_page_link': show_first_page_link, 'show_last_page_link': show_last_page_link})
+    return render(request, 'search.html', {'selected_region': selected_region, 'all_areas': all_areas, 'user': user, 'decoded_image': decoded_image, 'vacancies': vacancies, 'search_query': query, 'selected_region': selected_region, 'first_page_number': first_page_number, 'total_pages': total_pages, 'previous_page_number': previous_page_number, 'next_page_number': next_page_number, 'show_first_page_link': show_first_page_link, 'show_last_page_link': show_last_page_link})
 
 
 @login_required

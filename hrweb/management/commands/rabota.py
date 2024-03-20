@@ -1,5 +1,5 @@
 import requests
-import pymorphy2
+import pymorphy3
 from bs4 import BeautifulSoup
 from ...models import Vacancy
 from django.db import IntegrityError
@@ -9,7 +9,7 @@ from django.db import IntegrityError
 class RabotaParser:
     def __init__(self):
         self.base_url = "https://www.rabota.ru/vacancy/?sort=relevance&all_regions=1"
-        self.morph = pymorphy2.MorphAnalyzer()
+        self.morph = pymorphy3.MorphAnalyzer()
         
     def parse_city_name(self, city_name):
         parsed = self.morph.parse(city_name)[0]
