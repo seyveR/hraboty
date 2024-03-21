@@ -10,6 +10,7 @@ from django.db import IntegrityError
 class HHParser:
     def __init__(self):
         self.base_url = "https://api.hh.ru/vacancies?per_page=100&area=113"
+        self.count = 0
         
     def deEmojify(self, text):
         emoji_pattern = re.compile("["
@@ -51,29 +52,31 @@ class HHParser:
                     url = vac['alternate_url']
                     
                     try: salary_min = vac['salary']['from']
-                    except Exception: salary_min = 'Не указано'
-                    salary_min = salary_min if salary_min is not None else 'Не указано'
+                    except Exception: salary_min = None
+                    salary_min = salary_min if salary_min is not None else None
 
                     try: salary_max = vac['salary']['to']
-                    except Exception: salary_max = 'Не указано'
-                    salary_max = salary_max if salary_max is not None else 'Не указано'
+                    except Exception: salary_max = None
+                    salary_max = salary_max if salary_max is not None else None
 
                     area = vac['area']['name']
                     description = self.deEmojify(re.sub(r'\<[^>]*\>', '', str(f"Требования: {vac['snippet']['requirement']} Обязанности: {vac['snippet']['responsibility']}")))
                     date = (vac['published_at']).split('T')[0]
                     schedule = vac['schedule']['name']
-                    self.save_vacancy_info(name, employer, url, salary_min, salary_max, description, area, date, schedule)
+                    
+                    role = vac['professional_roles'][0]['name']
+                    role = 'Не указано' if role == 'Другое' else role
+                    self.save_vacancy_info(name, employer, url, salary_min, salary_max, description, area, date, schedule, role)
         except Exception:
             pass
 
-    def save_vacancy_info(self, name, employer, url, salary_min, salary_max, description, area, date, schedule):
+    def save_vacancy_info(self, name, employer, url, salary_min, salary_max, description, area, date, schedule,role):
         # Проверяем наличие записи с таким же URL в базе данных
         if Vacancy.objects.filter(url=url).exists():
             print(f"HH: {url} already exists. Skipping...")
             return
 
         try:
-            #print(salary_min, salary_max)
             vacancy = Vacancy.objects.create(
                 name=name,
                 employer=employer,
@@ -83,9 +86,11 @@ class HHParser:
                 description=description,
                 area=area,
                 date=date,
-                schedule=schedule
-            )
-            print(f"HH: {name} saved successfully.")
+                schedule=schedule,
+                role=role
+                )
+            self.count += 1
+            print(f"HH[{self.count}]: {name} saved successfully.")
         except IntegrityError:
             # Если возникает ошибка IntegrityError, значит запись была создана в другом потоке/процессе
             print(f"HH: Failed to save vacancy {name}: IntegrityError.")

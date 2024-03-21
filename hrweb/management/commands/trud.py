@@ -8,6 +8,7 @@ from django.db import IntegrityError
 class TrudvsemParser:
     def __init__(self):
         self.base_url = "https://opendata.trudvsem.ru/api/v1/vacancies"
+        self.count = 0
 
     def parse_and_save_vacancies(self):
         for page_number in range(100):
@@ -23,8 +24,8 @@ class TrudvsemParser:
                     employer = vac['vacancy']['company']['name']
                     url = vac['vacancy']['vac_url']
                     
-                    salary_max = vac['vacancy'].get('salary_max', 'Не указано') or 'Не указано'
-                    salary_min = vac['vacancy'].get('salary_min', 'Не указано') or 'Не указано'
+                    salary_max = vac['vacancy'].get('salary_max', None) or None
+                    salary_min = vac['vacancy'].get('salary_min', None) or None
                     
                     try:
                         description = re.sub(r'<[^>]*>', '', vac['vacancy']['duty']).replace("&bull;",'').replace("\n",' ').replace("\r",'').replace("&nbsp;",'').replace('&middot','')
@@ -59,7 +60,8 @@ class TrudvsemParser:
                 date=date,
                 schedule=schedule
             )
-            print(f"Trudvsem: {name} saved successfully.")
+            self.count += 1
+            print(f"Trudvsem[{self.count}]: {name} saved successfully.")
         except IntegrityError:
             # Если возникает ошибка IntegrityError, значит запись была создана в другом потоке/процессе
             print(f"Trudvsem: Failed to save vacancy {name}: IntegrityError.")

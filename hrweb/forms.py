@@ -21,7 +21,8 @@ class VacancyForm(forms.ModelForm):
             'description',
             'area',
             'date',
-            'schedule'
+            'schedule',
+            'role'
         }
 
 

@@ -10,6 +10,7 @@ class RabotaParser:
     def __init__(self):
         self.base_url = "https://www.rabota.ru/vacancy/?sort=relevance&all_regions=1"
         self.morph = pymorphy2.MorphAnalyzer()
+        self.count = 0
         
     def parse_city_name(self, city_name):
         parsed = self.morph.parse(city_name)[0]
@@ -52,8 +53,13 @@ class RabotaParser:
             salary_min = values[0].strip()
             salary_max = "Не указано"
 
-        # Возвращаем результат в виде кортежа
-        return salary_min.capitalize().replace('От ', ''), salary_max.capitalize()
+        try:int(salary_min.replace('От ', ''))
+        except:salary_min = None
+        
+        try:int(salary_max)
+        except:salary_max = None
+        
+        return salary_min, salary_max
 
     def save_vacancy_info(self, vacancy_url, description):
         page_content = requests.get(url=vacancy_url).text
@@ -107,7 +113,8 @@ class RabotaParser:
                     schedule=schedule,
                     date=date
                 )
-                print(f"Rabota: {title} saved successfully.")
+                self.count += 1
+                print(f"Rabota[{self.count}]: {title} saved successfully.")
             except Exception:
                 print(vacancy_url + ' ERROR')
                 pass
