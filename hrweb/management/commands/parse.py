@@ -1,5 +1,5 @@
 # from .rabota import RabotaParser
-from .trud import TrudvsemParser
+# from .trud import TrudvsemParser
 from .hh import HHParser
 from .rabota import RabotaParser
 from django.core.management.base import BaseCommand
@@ -9,7 +9,11 @@ class Command(BaseCommand):
     help = 'Запуск парсеров'
     
     def handle(self, *args, **options):
+<<<<<<< HEAD
         parsers = [HHParser(), TrudvsemParser(), RabotaParser()]
+=======
+        parsers = [HHParser()]
+>>>>>>> main
 
         # Запускаем парсеры
         for parser in parsers:

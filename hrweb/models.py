@@ -28,8 +28,13 @@ class Vacancy(models.Model):
     name = models.CharField(max_length=255, verbose_name ='Название')
     employer = models.CharField(max_length=255, verbose_name ='Работодатель')
     url = models.URLField(verbose_name ='Ссылка')
+<<<<<<< HEAD
     salary_min = models.IntegerField(verbose_name ='Зарплата min', default = None, null=True)
     salary_max = models.IntegerField(verbose_name ='Зарплата max', default = None, null=True)
+=======
+    salary_min = models.IntegerField(verbose_name='Зарплата min', null=True, default=None)
+    salary_max = models.IntegerField(verbose_name='Зарплата max', null=True, default=None)
+>>>>>>> main
     description = models.TextField(verbose_name ='Описание')
     area = models.CharField(max_length=255, verbose_name ='Зона')
     date = models.DateField(verbose_name ='Дата')

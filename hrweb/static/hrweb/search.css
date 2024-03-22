@@ -112,6 +112,8 @@
 }
 
 .vacancy-box {
+    border-left: 4px solid #5ABD74;
+    padding-left: 10px;
     background-color: #FFFFFF; 
     border-radius: 10px;
     padding: 5px 20px;
@@ -131,18 +133,46 @@
     margin-top: 20px;
 }
 
+.info_vac_salary {
+    padding-bottom: 20px;
+    font-size: 24px;
+}
+
 .info_vac_empl {
     padding-bottom: 3px;
+    font-size: 15px;
 }
 
 .info_vac_area {
     padding-bottom: 40px;
+    font-size: 15px;
 }
 
-.info_vac_salary {
-    padding-bottom: 20px;
-    font-size: 25px;
-    letter-spacing: .7px;
+.info_vac_details {
+    display: flex;
+    align-items: center;
+}
+
+.info_vac_date,
+.info_vac_schedule {
+    font-size: 15px;
+    padding-bottom: 5px;
+    margin-right: 10px;
+}
+
+.info_vac_schedule {
+    background-color: #FDF8E7;
+    border-radius: 5px;
+    padding: 3px 5px;
+}
+
+.info_vac_date {
+    border-radius: 5px;
+    padding: 3px 5px;
+}
+
+.info_vac_buttons {
+    margin-top: 10px;
 }
 
 .btn-more-info {
@@ -226,6 +256,10 @@
     margin-bottom: 10px; 
     font-size: 14px;
 }
+.item-li-region {
+    margin-bottom: 10px; 
+    font-size: 14px; 
+}
 
 .group-name {
     font-weight: bold;
@@ -247,4 +281,28 @@
 #region_value option {
     padding: 6px;
     font-size: 14px;
+}
+
+#slider-container {
+    margin-right: 5px;
+    margin-top: 14px;
+    padding-left: 15px;
+}
+
+.city-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+.city-list li {
+    padding: 0px 25px;
+}
+
+
+
+.show-all-link {
+    margin-top: 10px;
+}
+#hideSlider {
+    margin-top: 15px;
 }
