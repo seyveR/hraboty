@@ -76,17 +76,17 @@ body {
 }
 
 .tooltip {
-    visibility: hidden; /* Плашечка изначально скрыта */
-    background-color: white; /* Белый фон */
-    color: black; /* Черный текст */
+    visibility: hidden; 
+    background-color: white; 
+    color: black; 
     text-align: center;
-    border-radius: 5px; /* Закругленные углы */
-    padding: 20px; /* Больше отступов для текста */
+    border-radius: 5px; 
+    padding: 10px;
     position: absolute;
-    z-index: 1; /* Чтобы плашечка была выше изображения */
-    top: 60%; /* Центрирование по вертикали */
-    left: calc(98%); /* Расстояние от правого края изображения */
-    transform: translateY(20%); /* Центрирование по вертикали */
+    z-index: 1; 
+    top: 60%; 
+    left: calc(97%); 
+    transform: translateY(20%); 
     border: 2px solid black;
 }
 
@@ -526,7 +526,7 @@ body {
         position: absolute;
         z-index: 1; 
         top: 60%; 
-        left: calc(97%); 
+        left: calc(96%); 
         transform: translateY(20%); 
         border: 2px solid black;
     }
@@ -719,7 +719,7 @@ body {
         position: absolute;
         z-index: 1; 
         top: 60%; 
-        left: calc(97%); 
+        left: calc(96%); 
         transform: translateY(20%); 
         border: 2px solid black;
     }

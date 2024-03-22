@@ -3,7 +3,7 @@
 
 .price-container {
     text-align: center;
-    margin-top: 100px;
+    margin-top: 40px;
     padding: 0px 100px;
     font-family: 'Open Sans', sans-serif;
 }
@@ -20,90 +20,9 @@
 }
 
 
-/* Стили для слайдера */
-
-.slider-tarif {
-    margin-top: 40px;
-    position: relative;
-  }
-
-.slider {
-    width: 100%;
-    margin-top: 20px;
-    -webkit-appearance: none;
-    appearance: none;
-    height: 10px;
-    background: linear-gradient(to right, #d3d3d3 0%, #d3d3d3 100%, #5abd74 100%, #5abd74 100%);
-    outline: none;
-    opacity: 0.7;
-    -webkit-transition: .2s;
-    transition: opacity .2s;
-    border-radius: 5px;
-    position: relative;
-}
-
-.slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 20px;
-    height: 20px;
-    background: #5abd74;
-    cursor: pointer;
-    border-radius: 50%;
-    z-index: 1;
-}
-
-.slider::-moz-range-thumb {
-    width: 20px;
-    height: 20px;
-    background: #5abd74;
-    cursor: pointer;
-    border-radius: 50%;
-    z-index: 1;
-}
-
-.slider-value-container {
-    font-family: 'Open Sans', sans-serif;
-    position: absolute;
-    top: -35px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: #000;
-    border-radius: 10%;
-    padding: 7px 0px;
-    width: 90px;
-    color: #fff;
-}
-
-.slider-value {
-    font-size: 20px;
-}
-
-.slider-ticks {
-    position: relative;
-    bottom: 5px; /* Регулируйте это значение в зависимости от вашего дизайна */
-}
-
-.slider-tick {
-    position: absolute;
-    bottom: 0; /* Измените это значение, если нужно поднять или опустить черточки */
-    width: 2px; /* Измените ширину черточки при необходимости */
-    height: 10px; /* Измените высоту черточки при необходимости */
-    background-color: #000; /* Измените цвет черточки при необходимости */
-}
-
-.slider-tick-text {
-    position: absolute;
-    font-size: 24px;
-    bottom: -36px; /* Регулируйте это значение в зависимости от вашего дизайна */
-    transform: translateX(-50%);
-    white-space: nowrap; /* Чтобы текст не переносился на новую строку */
-}
-
-
 
 .price-types-container {
-    margin-top: 150px;
+    margin-top: 50px;
     padding: 0px 130px;
     letter-spacing: .3px;
 }
@@ -250,4 +169,520 @@
     background-color: #fff;
     color: #5abd74;
     border-color: #5abd74;
+}
+
+@media screen and (max-width: 1550px) {
+    .price-container {
+        text-align: center;
+        margin-top: 30px;
+        padding: 0px 80px;
+        font-family: 'Open Sans', sans-serif;
+    }
+    
+    .price-title {
+        font-size: 50px;
+        font-weight: 500;
+        letter-spacing: 1px;
+    }
+    
+    .price-text {
+        margin-top: 25px;
+        font-size: 36px;
+    }
+    
+    
+    
+    .price-types-container {
+        margin-top: 40px;
+        padding: 0px 100px;
+        letter-spacing: .2px;
+    }
+    
+    .price-types-holder {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        position: relative;
+        z-index: 1;
+        max-width: 100%;
+        margin-left: 30px;
+    }
+    
+    .price-type {
+        border-radius: 19px;
+        box-shadow: 0px 0px 0px 1px #000;
+        background-color: #fff;
+        width: 360px;
+        height: 560px;
+        margin-bottom: 20px;
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+    
+    .price-type.selected {
+        transform: scale(1.05);
+        box-shadow: 0px 0px 10px 1px #000;
+        z-index: 2;
+    }
+    
+    .price-type-image {
+        display: flex;
+        justify-content: left;
+        padding: 0px 0px;
+    }
+    
+    .price-type-img {
+        width: 150px;
+        height: 150px;
+    }
+    
+    .price-type-title {
+        text-align: center;
+        font-family: 'Open Sans', sans-serif;
+        font-size: 40px;
+        font-weight: 500;
+        padding-left: 18px;
+        margin-top: 8px;
+    }
+    
+    .price-type-desc {
+        text-align: center;
+        font-family: 'Open Sans', sans-serif;
+        font-size: 22px;
+        font-weight: 300;
+        padding: 0px 20px;
+        margin-top: 13px;
+    }
+    
+    
+    .list-li {
+        padding-left: 24px;
+        letter-spacing: 0.4px;
+        font-size: 15px;
+    }
+    
+    .custom-list,
+    .custom-list_try {
+        list-style: none;
+        padding: 0;
+    }
+    
+    .custom-list li,
+    .custom-list_try li {
+        position: relative;
+        margin-bottom: 24px;
+    }
+    
+    .custom-list_try li:before {
+        content: '';
+        position: absolute;
+        left: -18px; 
+        top: 50%; 
+        transform: translateY(-50%);
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background-size: contain; /* Подгон размера галочки */
+    }
+    
+    .custom-list_try li:first-child:before {
+        background: url('files/check.svg') no-repeat center center;
+    }
+    
+    .custom-list_try li:not(:first-child):before {
+        background: url('files/cross.svg') no-repeat center center;
+    }
+    
+    .custom-list li:before {
+        content: '';
+        position: absolute;
+        left: -18px; /* Расстояние от галочки до текста */
+        top: 50%; /* Выравнивание галочки по центру */
+        transform: translateY(-50%);
+        background: url('files/check.svg') no-repeat center center;
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background-size: contain; /* Подгон размера галочки */
+    }
+    
+    .custom-list li:after,
+    .custom-list_try li:after {
+        content: '';
+        display: block;
+        position: absolute;
+        left: 0; /* Расстояние от линии до текста */
+        top: 100%; /* Помещаем линию под каждый элемент li */
+        width: 100%;
+        height: 1px;
+        background-color: #ccc; /* Цвет линии */
+    }
+    
+    
+    .btn-price-block {
+        display: flex;
+        justify-content: center;
+        margin-top: 80px;
+    }
+    
+    .btn-price {
+        background-color: #5abd74;
+        color: #fff;
+        text-decoration: none;
+        padding: 14px 32px;
+        font-size: 18px;
+        font-weight: 500;
+        border-radius: 6px;
+        font-family: 'Open Sans', sans-serif;
+        border: 2px solid transparent;
+    }
+    
+    .btn-price:hover{
+        background-color: #fff;
+        color: #5abd74;
+        border-color: #5abd74;
+    }
+}
+
+@media screen and (max-width: 1350px) {
+    .price-container {
+        text-align: center;
+        margin-top: 30px;
+        padding: 0px 60px;
+        font-family: 'Open Sans', sans-serif;
+    }
+    
+    .price-title {
+        font-size: 38px;
+        font-weight: 500;
+        letter-spacing: 1px;
+    }
+    
+    .price-text {
+        margin-top: 20px;
+        font-size: 28px;
+    }
+    
+    
+    
+    .price-types-container {
+        margin-top: 30px;
+        padding: 0px 60px;
+        letter-spacing: .2px;
+    }
+    
+    .price-types-holder {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        position: relative;
+        z-index: 1;
+        max-width: 100%;
+        margin-left: 25px;
+    }
+    
+    .price-type {
+        border-radius: 17px;
+        box-shadow: 0px 0px 0px 1px #000;
+        background-color: #fff;
+        width: 340px;
+        height: 450px;
+        margin-bottom: 16px;
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+    
+    .price-type.selected {
+        transform: scale(1.05);
+        box-shadow: 0px 0px 10px 1px #000;
+        z-index: 2;
+    }
+    
+    .price-type-image {
+        display: flex;
+        justify-content: left;
+        padding: 0px 0px;
+    }
+    
+    .price-type-img {
+        width: 120px;
+        height: 120px;
+    }
+    
+    .price-type-title {
+        text-align: center;
+        font-family: 'Open Sans', sans-serif;
+        font-size: 32px;
+        font-weight: 500;
+        padding-left: 16px;
+        margin-top: 8px;
+    }
+    
+    .price-type-desc {
+        text-align: center;
+        font-family: 'Open Sans', sans-serif;
+        font-size: 19px;
+        font-weight: 300;
+        padding: 0px 16px;
+        margin-top: 13px;
+    }
+    
+    
+    .list-li {
+        padding-left: 26px;
+        letter-spacing: 0.3px;
+        font-size: 14px;
+    }
+    
+    .custom-list,
+    .custom-list_try {
+        list-style: none;
+        padding: 0;
+    }
+    
+    .custom-list li,
+    .custom-list_try li {
+        position: relative;
+        margin-bottom: 20px;
+    }
+    
+    .custom-list_try li:before {
+        content: '';
+        position: absolute;
+        left: -18px; 
+        top: 50%; 
+        transform: translateY(-50%);
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background-size: contain; /* Подгон размера галочки */
+    }
+    
+    .custom-list_try li:first-child:before {
+        background: url('files/check.svg') no-repeat center center;
+    }
+    
+    .custom-list_try li:not(:first-child):before {
+        background: url('files/cross.svg') no-repeat center center;
+    }
+    
+    .custom-list li:before {
+        content: '';
+        position: absolute;
+        left: -18px; /* Расстояние от галочки до текста */
+        top: 50%; /* Выравнивание галочки по центру */
+        transform: translateY(-50%);
+        background: url('files/check.svg') no-repeat center center;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background-size: contain; /* Подгон размера галочки */
+    }
+    
+    .custom-list li:after,
+    .custom-list_try li:after {
+        content: '';
+        display: block;
+        position: absolute;
+        left: 0; /* Расстояние от линии до текста */
+        top: 100%; /* Помещаем линию под каждый элемент li */
+        width: 100%;
+        height: 1px;
+        background-color: #ccc; /* Цвет линии */
+    }
+    
+    
+    .btn-price-block {
+        display: flex;
+        justify-content: center;
+        margin-top: 50px;
+    }
+    
+    .btn-price {
+        background-color: #5abd74;
+        color: #fff;
+        text-decoration: none;
+        padding: 10px 26px;
+        font-size: 16px;
+        font-weight: 500;
+        border-radius: 5px;
+        font-family: 'Open Sans', sans-serif;
+        border: 2px solid transparent;
+    }
+    
+    .btn-price:hover{
+        background-color: #fff;
+        color: #5abd74;
+        border-color: #5abd74;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .price-container {
+        text-align: center;
+        margin-top: 30px;
+        padding: 0px 40px;
+        font-family: 'Open Sans', sans-serif;
+    }
+    
+    .price-title {
+        font-size: 30px;
+        font-weight: 500;
+        letter-spacing: 1px;
+    }
+    
+    .price-text {
+        margin-top: 15px;
+        font-size: 20px;
+    }
+    
+    
+    
+    .price-types-container {
+        margin-top: 20px;
+        padding: 0px 40px;
+        letter-spacing: .2px;
+    }
+    
+    .price-types-holder {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        position: relative;
+        z-index: 1;
+        max-width: 100%;
+        margin-left: 22px;
+    }
+    
+    .price-type {
+        border-radius: 17px;
+        box-shadow: 0px 0px 0px 1px #000;
+        background-color: #fff;
+        width: 280px;
+        height: 380px;
+        margin-bottom: 16px;
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+    
+    .price-type.selected {
+        transform: scale(1.05);
+        box-shadow: 0px 0px 10px 1px #000;
+        z-index: 2;
+    }
+    
+    .price-type-image {
+        display: flex;
+        justify-content: left;
+        padding: 0px 0px;
+    }
+    
+    .price-type-img {
+        width: 120px;
+        height: 120px;
+    }
+    
+    .price-type-title {
+        text-align: center;
+        font-family: 'Open Sans', sans-serif;
+        font-size: 22px;
+        font-weight: 500;
+        padding-left: 14px;
+        margin-top: 6px;
+    }
+    
+    .price-type-desc {
+        text-align: center;
+        font-family: 'Open Sans', sans-serif;
+        font-size: 16px;
+        font-weight: 300;
+        padding: 0px 12px;
+        margin-top: 10px;
+    }
+    
+    
+    .list-li {
+        padding-left: 23px;
+        letter-spacing: 0.2px;
+        font-size: 12px;
+    }
+    
+    .custom-list,
+    .custom-list_try {
+        list-style: none;
+        padding: 0;
+    }
+    
+    .custom-list li,
+    .custom-list_try li {
+        position: relative;
+        margin-bottom: 16px;
+    }
+    
+    .custom-list_try li:before {
+        content: '';
+        position: absolute;
+        left: -16px; 
+        top: 50%; 
+        transform: translateY(-50%);
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-size: contain; /* Подгон размера галочки */
+    }
+    
+    .custom-list_try li:first-child:before {
+        background: url('files/check.svg') no-repeat center center;
+    }
+    
+    .custom-list_try li:not(:first-child):before {
+        background: url('files/cross.svg') no-repeat center center;
+    }
+    
+    .custom-list li:before {
+        content: '';
+        position: absolute;
+        left: -16px; /* Расстояние от галочки до текста */
+        top: 50%; /* Выравнивание галочки по центру */
+        transform: translateY(-50%);
+        background: url('files/check.svg') no-repeat center center;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-size: contain;
+    }
+    
+    .custom-list li:after,
+    .custom-list_try li:after {
+        content: '';
+        display: block;
+        position: absolute;
+        left: 0; /* Расстояние от линии до текста */
+        top: 100%; /* Помещаем линию под каждый элемент li */
+        width: 100%;
+        height: 1px;
+        background-color: #ccc; /* Цвет линии */
+    }
+    
+    
+    .btn-price-block {
+        display: flex;
+        justify-content: center;
+        margin-top: 40px;
+    }
+    
+    .btn-price {
+        background-color: #5abd74;
+        color: #fff;
+        text-decoration: none;
+        padding: 8px 20px;
+        font-size: 15px;
+        font-weight: 500;
+        border-radius: 5px;
+        font-family: 'Open Sans', sans-serif;
+        border: 2px solid transparent;
+    }
+    
+    .btn-price:hover{
+        background-color: #fff;
+        color: #5abd74;
+        border-color: #5abd74;
+    }
 }

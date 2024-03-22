@@ -75,13 +75,19 @@ def search(request):
     schedule = request.GET.getlist("schedule[]")
     print(schedule)
     if schedule:
-        vacancies_list = vacancies_list.filter(schedule__in=schedule)
+        if 'Полный день' in schedule:
+            vacancies_list = vacancies_list.filter(Q(schedule__icontains='Полный'))
+        elif 'Вахтовый метод' in schedule:
+            vacancies_list = vacancies_list.filter(Q(schedule__in=schedule) | Q(schedule__icontains='Вахта'))
+        else:
+            vacancies_list = vacancies_list.filter(schedule__in=schedule)
 
     # Фильтр по региону
     all_areas = Vacancy.objects.values_list('area', flat=True).distinct()
     selected_region = request.GET.getlist("area[]")
     if selected_region:
-        vacancies_list = vacancies_list.filter(area__in=selected_region)
+        if 'Россия' not in selected_region:
+            vacancies_list = vacancies_list.filter(area__in=selected_region)
 
     # Фильтрация по дате
     check_date = request.GET.getlist("check_date[]")

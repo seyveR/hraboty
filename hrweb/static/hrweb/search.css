@@ -306,3 +306,449 @@
 #hideSlider {
     margin-top: 15px;
 }
+
+@media screen and (max-width: 1550px) {
+    .filters-info {
+        margin-top: 50px;
+    }
+    
+    .search-container {
+        margin-bottom: 10px; 
+        width: 50%; 
+        max-width: 400px;
+        margin: 0 228px;
+    }
+    
+    .search-input input {
+        width: 50%; 
+        max-width: 400px; 
+        height: 10px;
+        font-size: 14px;
+        padding: 15px;
+        margin-bottom: 10px; /* Отступ между полями для ввода */
+        border: 1px solid #000;
+        border-radius: 8px;
+    }
+
+    .search-input {
+        margin-top: -30px;
+    }
+
+    .toggle-search {
+        position: absolute;
+        right: 30px;
+        top: 40%;
+        transform: translateY(-50%);
+        cursor: pointer;
+    }
+    
+    
+    
+    .search-input input {
+        width: 74%;
+    }
+    
+
+    
+    .vacancies {
+        justify-content:end;
+        padding-left: 0px;
+        padding-right: 250px;
+    }
+    
+    .vacancy-box {
+        border-left: 4px solid #5ABD74;
+        padding-left: 7px;
+        background-color: #FFFFFF; 
+        border-radius: 9px;
+        padding: 3px 16px;
+        margin: 5px auto; 
+        width: calc(100%); 
+        box-sizing: border-box;
+        font-family: 'Open Sans', sans-serif;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); 
+        margin-bottom: 22px;
+    }
+    
+    .name_vac {
+        font-size: 18px;
+        font-weight: bold;
+        padding-bottom: 5px;
+        color: #5abd74;
+        margin-top: 18px;
+    }
+    
+    .info_vac_salary {
+        padding-bottom: 18px;
+        font-size: 21px;
+    }
+    
+    .info_vac_empl {
+        padding-bottom: 3px;
+        font-size: 14px;
+    }
+    
+    .info_vac_area {
+        padding-bottom: 32px;
+        font-size: 14px;
+    }
+    
+    .info_vac_date,
+    .info_vac_schedule {
+        font-size: 14px;
+        padding-bottom: 5px;
+        margin-right: 8px;
+    }
+    
+    .info_vac_schedule {
+        background-color: #FDF8E7;
+        border-radius: 5px;
+        padding: 2px 4px;
+    }
+    
+    .info_vac_date {
+        border-radius: 5px;
+        padding: 2px 4px;
+    }
+    
+    .info_vac_buttons {
+        margin-top: 10px;
+    }
+    
+    .btn-more-info {
+        background-color: #000;
+        color: #fff;
+        text-decoration: none;
+        padding: 6px 21px;
+        font-size: 14px;
+        font-weight: 500;
+        border-radius: 5px;
+        font-family: 'Open Sans', sans-serif;
+        border: 2px solid transparent;
+        margin-bottom: 20px;
+    }
+    
+    .btn-more-info:hover{
+        background-color: #fff;
+        color: #000;
+        border-color: #000;
+    }
+    
+    .btn-call {
+        background-color: #5abd74;
+        color: #fff;
+        text-decoration: none;
+        padding: 6px 21px;
+        font-size: 14px;
+        font-weight: 500;
+        border-radius: 5px;
+        font-family: 'Open Sans', sans-serif;
+        border: 2px solid transparent;
+    }
+    
+    .btn-call:hover{
+        background-color: #fff;
+        color: #5abd74;
+        border-color: #5abd74;
+    }
+    
+    .pagination {
+        text-align: center; 
+        font-size: 16px; 
+        font-family: 'Open Sans', sans-serif; 
+    }
+
+    .filters-container {
+        width: 25%; 
+        padding-left: 250px;
+    }
+    
+    .vacancies-container {
+        width: 75%; 
+    }
+    
+    
+    .group-items-ul {
+        list-style: none; 
+        font-size: 13px;
+    }
+    
+    .item-li {
+        margin-bottom: 8px; 
+        font-size: 13px;
+    }
+    .item-li-region {
+        margin-bottom: 10px; 
+        font-size: 13px; 
+    }
+    
+    .group-name {
+        font-weight: bold;
+        font-size: 15px;
+    }
+    
+    #region_value {
+        padding: 6px;
+        font-size: 15px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        background-color: #fff;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+        outline: none;
+        width: 110px; 
+    }
+    
+    #region_value option {
+        padding: 6px;
+        font-size: 13px;
+    }
+    
+    #slider-container {
+        margin-right: 5px;
+        margin-top: 14px;
+        padding-left: 15px;
+    }
+    
+    .city-list li {
+        padding: 0px 22px;
+    }
+    
+    
+    
+    .show-all-link {
+        margin-top: 10px;
+    }
+    #hideSlider {
+        margin-top: 15px;
+    }
+    
+
+}
+
+@media screen and (max-width: 1300px) {
+    .filters-info {
+        margin-top: 50px;
+    }
+    
+    .search-container {
+        margin-bottom: 10px; 
+        width: 50%; 
+        max-width: 400px;
+        margin: 0 110px;
+    }
+    
+    .search-input input {
+        width: 50%; 
+        max-width: 300px; 
+        height: 7px;
+        font-size: 13px;
+        padding: 13px;
+        margin-bottom: 10px; 
+        border: 1px solid #000;
+        border-radius: 7px;
+    }
+
+    .search-input {
+        margin-top: -30px;
+    }
+
+    .toggle-search {
+        position: absolute;
+        right: 50px;
+        top: 40%;
+        transform: translateY(-50%);
+        cursor: pointer;
+    }
+
+    .toggle-search {
+        width: 17px;
+        height: 17px;
+    }
+    
+    
+    
+    .search-input input {
+        width: 64%;
+    }
+    
+
+    
+    .vacancies {
+        justify-content:end;
+        padding-left: 0px;
+        padding-right: 150px;
+    }
+    
+    .vacancy-box {
+        border-left: 4px solid #5ABD74;
+        padding-left: 6px;
+        background-color: #FFFFFF; 
+        border-radius: 8px;
+        padding: 2px 14px;
+        margin: 4px auto; 
+        width: calc(100%); 
+        box-sizing: border-box;
+        font-family: 'Open Sans', sans-serif;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); 
+        margin-bottom: 20px;
+    }
+    
+    .name_vac {
+        font-size: 16px;
+        font-weight: bold;
+        padding-bottom: 4px;
+        color: #5abd74;
+        margin-top: 14px;
+    }
+    
+    .info_vac_salary {
+        padding-bottom: 16px;
+        font-size: 19px;
+    }
+    
+    .info_vac_empl {
+        padding-bottom: 3px;
+        font-size: 13px;
+    }
+    
+    .info_vac_area {
+        padding-bottom: 32px;
+        font-size: 13px;
+    }
+    
+    .info_vac_date,
+    .info_vac_schedule {
+        font-size: 13px;
+        padding-bottom: 5px;
+        margin-right: 6px;
+    }
+    
+    .info_vac_schedule {
+        background-color: #FDF8E7;
+        border-radius: 5px;
+        padding: 2px 4px;
+    }
+    
+    .info_vac_date {
+        border-radius: 5px;
+        padding: 2px 4px;
+    }
+    
+    .info_vac_buttons {
+        margin-top: 8px;
+    }
+    
+    .btn-more-info {
+        background-color: #000;
+        color: #fff;
+        text-decoration: none;
+        padding: 5px 18px;
+        font-size: 13px;
+        font-weight: 500;
+        border-radius: 5px;
+        font-family: 'Open Sans', sans-serif;
+        border: 2px solid transparent;
+        margin-bottom: 16px;
+    }
+    
+    .btn-more-info:hover{
+        background-color: #fff;
+        color: #000;
+        border-color: #000;
+    }
+    
+    .btn-call {
+        background-color: #5abd74;
+        color: #fff;
+        text-decoration: none;
+        padding: 5px 18px;
+        font-size: 13px;
+        font-weight: 500;
+        border-radius: 5px;
+        font-family: 'Open Sans', sans-serif;
+        border: 2px solid transparent;
+    }
+    
+    .btn-call:hover{
+        background-color: #fff;
+        color: #5abd74;
+        border-color: #5abd74;
+    }
+    
+    .pagination {
+        text-align: center; 
+        font-size: 15px; 
+        font-family: 'Open Sans', sans-serif; 
+    }
+
+    .filters-container {
+        width: 25%; 
+        padding-left: 150px;
+    }
+    
+    .vacancies-container {
+        width: 75%; 
+    }
+    
+    
+    .group-items-ul {
+        list-style: none; 
+        font-size: 13px;
+    }
+    
+    .item-li {
+        margin-bottom: 8px; 
+        font-size: 13px;
+    }
+    .item-li-region {
+        margin-bottom: 10px; 
+        font-size: 13px; 
+    }
+
+    .hide-all-link,
+    .show-all-link {
+        font-size: 14px;
+    }
+    
+    .group-name {
+        font-weight: bold;
+        font-size: 14px;
+    }
+    
+    #region_value {
+        padding: 6px;
+        font-size: 14px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        background-color: #fff;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+        outline: none;
+        width: 100px; 
+    }
+    
+    #region_value option {
+        padding: 6px;
+        font-size: 13px;
+    }
+    
+    #slider-container {
+        margin-right: 5px;
+        margin-top: 14px;
+        padding-left: 14px;
+    }
+    
+    .city-list li {
+        padding: 0px 22px;
+    }
+    
+    .show-all-link {
+        margin-top: 10px;
+    }
+    #hideSlider {
+        margin-top: 15px;
+    }
+    
+
+}
