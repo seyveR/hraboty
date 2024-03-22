@@ -8,20 +8,11 @@ from django.db import IntegrityError
 class TrudvsemParser:
     def __init__(self):
         self.base_url = "https://opendata.trudvsem.ru/api/v1/vacancies"
-
-    def get_vacancy_count(self):
-        req = requests.get(self.base_url)
-        data = req.json()
-        req.close()
-        total_vacancies = data['meta']['total']
-        return total_vacancies
+        self.count = 0
 
     def parse_and_save_vacancies(self):
-        total_vacancies = self.get_vacancy_count()
-        max_page = math.ceil(total_vacancies / 100)
-
-        for page_number in range(1, max_page + 1):
-            url = f"{self.base_url}?offset={(page_number - 1) * 100}"
+        for page_number in range(100):
+            url = f"{self.base_url}?offset={page_number}"
             req = requests.get(url)
             data = req.json()
             req.close()
@@ -32,14 +23,12 @@ class TrudvsemParser:
                     name = vac['vacancy']['job-name']
                     employer = vac['vacancy']['company']['name']
                     url = vac['vacancy']['vac_url']
-                    if vac['vacancy']['salary_max'] == 0:
-                        salary = vac['vacancy']['salary_min']
-                    else:
-                        salary = vac['vacancy']['salary_max']
-                    if salary == 0:
-                        salary = 'Не указано'
+                    
+                    salary_max = vac['vacancy'].get('salary_max', None) or None
+                    salary_min = vac['vacancy'].get('salary_min', None) or None
+                    
                     try:
-                        description = re.sub(r'<[^>]*>', '', vac['vacancy']['duty']).replace("\n",' ').replace("\r",'').replace("&nbsp;",'').replace('&middot','')
+                        description = re.sub(r'<[^>]*>', '', vac['vacancy']['duty']).replace("&bull;",'').replace("\n",' ').replace("\r",'').replace("&nbsp;",'').replace('&middot','')
                     except Exception as ex:
                         description = 'Не указано'
                     try:
@@ -49,14 +38,14 @@ class TrudvsemParser:
                     date = vac['vacancy']['creation-date']
                     schedule = vac['vacancy']['schedule']
 
-                    self.save_vacancy_info(name, employer, url, salary, description, area, date, schedule)
+                    self.save_vacancy_info(name, employer, url, salary_min, salary_max, description, area, date, schedule)
             else:
                 break
 
-    def save_vacancy_info(self, name, employer, url, salary, description, area, date, schedule):
+    def save_vacancy_info(self, name, employer, url, salary_min, salary_max, description, area, date, schedule):
         # Проверяем наличие записи с таким же URL в базе данных
         if Vacancy.objects.filter(url=url).exists():
-            print(f"{url} already exists. Skipping...")
+            print(f"Trudvsem: {url} already exists. Skipping...")
             return
 
         try:
@@ -64,13 +53,15 @@ class TrudvsemParser:
                 name=name,
                 employer=employer,
                 url=url,
-                salary=salary,
+                salary_min=salary_min,
+                salary_max=salary_max,
                 description=description,
                 area=area,
                 date=date,
                 schedule=schedule
             )
-            print(f"{name} saved successfully.")
+            self.count += 1
+            print(f"Trudvsem[{self.count}]: {name} saved successfully.")
         except IntegrityError:
             # Если возникает ошибка IntegrityError, значит запись была создана в другом потоке/процессе
-            print(f"Failed to save vacancy {name}: IntegrityError.")
+            print(f"Trudvsem: Failed to save vacancy {name}: IntegrityError.")
